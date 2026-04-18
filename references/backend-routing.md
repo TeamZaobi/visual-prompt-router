@@ -51,8 +51,26 @@ Action:
 
 - use the local Gemini CLI or Nano Banana route
 - preserve the exact prompt used for reruns
+- preserve the exact command form, output directory, and any extension or model
+  assumption used for the run
+- if image-specific CLI capability is not actually verified in the current host,
+  say so and do not pretend shell availability alone proves the route is ready
 
 ## Route 4: Browser Create-Image Flow
+
+Browser route is a logical route, not one fixed adapter.
+
+Possible adapters include:
+
+- browser MCP such as `playwright`
+- browser MCP such as `chrome-devtools`
+- desktop app control such as `computer-use`
+
+Adapter preference:
+
+- prefer browser-native MCP control when it is available and sufficient
+- use desktop app control only when the job truly depends on full app-level
+  interaction or the lighter browser MCP path is unavailable
 
 Use when:
 
@@ -60,11 +78,35 @@ Use when:
 - the platform's create-image feature is required
 - high-resolution download is only available through the site
 - browser-only controls matter
+- the host can actually control the target browser for this turn
 
 Action:
 
 - treat browser actions as the main flow, not as a fake CLI wrapper
 - include required download clicks as part of the real workflow
+- record the actual adapter used, the target browser or app, the intended
+  download directory, and the last completed step before handing control back
+
+Preflight before promising execution:
+
+- verify browser automation or desktop-control access is available
+- verify the target browser is controllable in the current host session
+- verify approval or permission gating will not block app control
+
+If preflight fails:
+
+- say explicitly that the browser route is blocked by environment or approval
+  constraints
+- do not imply that the prompt or route selection was wrong
+- fall back to `prompt-only`, built-in image generation, or Gemini CLI,
+  depending on what the user asked for and what remains feasible
+
+Browser-state rule:
+
+- do not assume the next turn can infer the same browser tab, download state,
+  or logged-in session from prior chat alone
+- externalize the important state into a route card or run note before you move
+  on
 
 ## Serial-By-Default Rule
 
@@ -78,6 +120,7 @@ Reason:
 - lower anti-abuse risk
 - lower session collision risk
 - easier per-image review
+- easier recovery when browser control is permission-gated
 
 ## When To Change Route Instead Of Rewriting Prompt
 
@@ -90,6 +133,7 @@ Change route first when:
 - the deliverable is a text-heavy technical infographic and spelling keeps
   drifting
 - the user needs later editing in a diagram or slide workflow
+- the website route is blocked by browser-control or approval denial
 
 ## Special Handling For Technical Infographics
 
@@ -113,3 +157,4 @@ When the user asks for routing advice, report:
 2. why it fits
 3. fallback route
 4. execution cautions
+5. whether browser-control preflight passed

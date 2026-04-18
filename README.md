@@ -25,7 +25,11 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/prompt-assembly.md](./references/prompt-assembly.md): medium-first prompt method
 - [references/patterns-and-examples.md](./references/patterns-and-examples.md): reusable prompt patterns
 - [references/backend-routing.md](./references/backend-routing.md): routing logic across image workflows
+- [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
+- [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
+- [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
 - [references/acceptance-and-reroute.md](./references/acceptance-and-reroute.md): review, acceptance, and reroute criteria
+- [scripts/visual_route_probe.py](./scripts/visual_route_probe.py): local shell probe for route readiness
 - [agents/openai.yaml](./agents/openai.yaml): compact agent-facing launcher metadata
 
 ## Design Principles
@@ -35,6 +39,7 @@ This repo is designed for image-generation prompt work across tasks such as:
 3. Layout before decoration.
 4. Source facts before generated artifacts.
 5. Route changes matter as much as prompt changes.
+6. Execution state has to be externalized if the route spans turns.
 
 ## Technical Infographic Guidance
 

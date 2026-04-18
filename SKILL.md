@@ -56,6 +56,12 @@ It solves five questions:
 - Need common deliverable templates and examples: [references/patterns-and-examples.md](./references/patterns-and-examples.md)
 - Need routing rules across prompt-only, built-in, CLI, and browser paths:
   [references/backend-routing.md](./references/backend-routing.md)
+- Need concrete preflight checks before promising an execution path:
+  [references/execution-preflight.md](./references/execution-preflight.md)
+- Need the route card and artifact fields that make execution resumable:
+  [references/dispatch-contract.md](./references/dispatch-contract.md)
+- Need state-capture and resume rules for browser or CLI work:
+  [references/state-capture-and-resume.md](./references/state-capture-and-resume.md)
 - Need acceptance, reroute, and redo rules:
   [references/acceptance-and-reroute.md](./references/acceptance-and-reroute.md)
 
@@ -70,11 +76,23 @@ It solves five questions:
 5. Prompt-only means prompt-only. Do not silently escalate into generation.
 6. Same-site browser generation defaults to serial execution unless the user
    explicitly accepts the risk of parallel work.
-7. If two rounds fail in the same direction, consider rerouting instead of
+7. Do not promise browser create-image execution before confirming the host can
+   actually control a browser or browser automation path for that turn.
+8. If browser control, app-control permission, session state, or approval
+   gating blocks the website route, say so explicitly and downgrade to
+   `prompt-only` or another viable backend instead of framing it as a prompt
+   failure.
+9. Turn-local tool state is not durable memory. If a CLI or browser route may
+   span turns, externalize the route state and artifact paths before executing.
+10. If a route depends on downloads, tabs, login/session assumptions, or an
+    adapter such as `chrome-devtools`, `playwright`, or `computer-use`, record
+    those dependencies explicitly instead of assuming the next turn can recover
+    them from chat history.
+11. If two rounds fail in the same direction, consider rerouting instead of
    endlessly rewriting the prompt.
-8. For text-heavy diagrams, layout map and text budget beat style adjectives.
-9. If exact labels or later editability are hard requirements, do not pretend a
-   raster image is automatically the final deliverable.
+12. For text-heavy diagrams, layout map and text budget beat style adjectives.
+13. If exact labels or later editability are hard requirements, do not pretend a
+    raster image is automatically the final deliverable.
 
 ## Core Workflow
 
@@ -138,12 +156,29 @@ Detailed guidance and templates live in
 - If the host image tool is enough, use the built-in path
 - If the task depends on Gemini CLI or Nano Banana strengths, use that route
 - If the task depends on browser-only create-image flow or high-res downloads,
-  use browser automation
+  use browser automation only after confirming the host can actually drive a
+  browser for that turn; otherwise fall back cleanly
 
 Detailed routing rules live in
 [references/backend-routing.md](./references/backend-routing.md).
 
-### 6. Review The Result
+### 6. Preflight And Externalize State
+
+Before execution, do two things:
+
+1. run a route preflight that verifies the actual adapter or command surface
+2. create a small route card that captures prompt source, adapter, artifact
+   directory, expected outputs, and current blocker state
+
+Do not treat a browser tab, MCP session, or previous tool call as durable state
+unless you have written the important details down.
+
+Detailed guidance lives in
+[references/execution-preflight.md](./references/execution-preflight.md),
+[references/dispatch-contract.md](./references/dispatch-contract.md), and
+[references/state-capture-and-resume.md](./references/state-capture-and-resume.md).
+
+### 7. Review The Result
 
 Check the result against the acceptance dimensions, especially:
 
@@ -163,7 +198,7 @@ If the image is wrong, decide whether the fault is:
 - text-fidelity mismatch
 - low-quality random variation
 
-### 7. Close Cleanly
+### 8. Close Cleanly
 
 - keep the approved image, prompt, and any required notes
 - drop expendable failed candidates and temporary files
@@ -183,6 +218,7 @@ When the user asks for routing help, prefer this format:
 2. why this route fits
 3. fallback route
 4. any execution constraints
+5. whether browser control or approval gating was verified
 
 ## Writing Standard
 
