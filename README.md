@@ -40,6 +40,8 @@ This repo is designed for image-generation prompt work across tasks such as:
 4. Source facts before generated artifacts.
 5. Route changes matter as much as prompt changes.
 6. Execution state has to be externalized if the route spans turns.
+7. Chinese-first image tasks should default to a Gemini-family route, not the
+   built-in image path.
 
 ## Technical Infographic Guidance
 

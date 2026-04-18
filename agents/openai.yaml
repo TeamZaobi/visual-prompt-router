@@ -6,5 +6,7 @@ prompt: |
   使用 $visual-prompt-router 处理这次视觉任务：
   先判交付物类型，再读用户给出的事实与参考，按 medium-first 方法写 prompt，
   然后决定是 prompt-only、宿主原生出图、Gemini CLI / Nano Banana，还是浏览器 create image。
-  如果要执行，不要只报路由名；先做 preflight，再写最小 route card，记录适配器、产物目录、下载/会话依赖和 blocker。
+  如果是中文优先的图片任务，默认优先考虑 Gemini 系列路由，不要先走宿主原生 image gen，除非用户明确只要快速草图或明确指定别的路径。
+  如果选中的就是宿主原生生图路径，而且用户明确说“做图”“出图”“生成图片”或等价的直接执行词，就直接执行，不要先展开工具调用分析。
+  只有在非原生路径里，才把 preflight、adapter、route card、下载/会话依赖这些工具调用问题展开说明。
   不要把生成结果反升格为真源。

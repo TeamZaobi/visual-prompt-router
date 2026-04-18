@@ -10,10 +10,12 @@ Score the image against these dimensions:
 2. medium fit
 3. design consistency
 4. layout integrity
-5. text fidelity
-6. material quality
-7. emotional order
-8. downstream usefulness
+5. role clarity and node anatomy
+6. pedagogical warmth and visual liveliness
+7. text fidelity
+8. material quality
+9. emotional order
+10. downstream usefulness
 
 ## Typical Failure Modes
 
@@ -68,7 +70,24 @@ Default action:
 
 - decide whether the backend is the wrong fit before adding more adjectives
 
-### 5. Layout Failure
+### 5. Dead Diagram Failure
+
+Signs:
+
+- the structure is technically correct but the image feels like a sterile
+  corporate box diagram
+- there is no title rhythm, section rhythm, or icon warmth
+- every node becomes the same anonymous rectangle
+- different roles do not have distinct card anatomy or color identity
+- the output reads like documentation scaffolding, not a teaching graphic
+
+Default action:
+
+- strengthen diagram posture first
+- add concrete icon metaphors, title treatment, card language, and arrow
+  language instead of adding more abstract style words
+
+### 6. Layout Failure
 
 Signs:
 
@@ -82,7 +101,7 @@ Default action:
 - rewrite the section map and layout relationships first
 - prefer column language over rigid lanes when the reference is column-based
 
-### 6. Text Fidelity Failure
+### 7. Text Fidelity Failure
 
 Signs:
 
@@ -94,7 +113,12 @@ Signs:
 Default action:
 
 - reduce text budget and shorten labels first
-- if exact wording still matters, reroute instead of piling on more prompt detail
+- if Chinese wording or Chinese labels still degrade, reroute to a
+  Gemini-family path before piling on more prompt detail
+- if exact wording still matters, reroute instead of piling on more prompt
+  detail
+- if the chosen route was host-native, do not retroactively invent route
+  analysis before the first native round; inspect the actual failure first
 
 ## When To Reroute
 
@@ -105,6 +129,8 @@ Reroute when:
 3. the current backend keeps reverting to its own defaults
 4. text-heavy diagrams keep missing label accuracy
 5. editability or publishable correctness matters more than fast image variation
+6. a built-in image path keeps losing Chinese prompt intent, Chinese label
+   quality, or Chinese copy fidelity
 
 ## Closeout Rule
 

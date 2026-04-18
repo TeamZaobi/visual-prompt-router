@@ -24,13 +24,30 @@ Use when:
 
 - the host already has a stable image tool
 - the task is straightforward
+- the task is not Chinese-first, or the user explicitly accepts a rough draft
 - the user does not require Gemini-specific behavior
 - fast iteration matters more than platform-specific workflow
+- the chosen route is already the host-native image path
 
 Action:
 
+- if the user says `做图`, `出图`, `生成图片`, `generate image`, or `render`,
+  treat that as direct execution intent on this route
 - generate through the host's built-in image path
 - review immediately after each image
+
+Native-route rule:
+
+- do not expand tool-call discussion first once the route is already native
+- only reopen route analysis if the native path is unavailable in this turn or
+  if one native round clearly shows a backend mismatch
+
+Special note for Chinese-first tasks:
+
+- do not make this the default route when Chinese prompt nuance, Chinese copy,
+  or Chinese label quality matters
+- use it only for rough exploration when the user explicitly prefers speed over
+  Chinese-language quality
 
 Special note for technical infographics:
 
@@ -43,6 +60,8 @@ Special note for technical infographics:
 Use when:
 
 - the user explicitly wants Gemini CLI or Nano Banana
+- the task is Chinese-first and image quality depends on Chinese-language
+  understanding
 - the task depends on Gemini-side image behavior
 - reference-image control or repeatable CLI execution matters
 - the workflow benefits from shell traceability
@@ -55,6 +74,33 @@ Action:
   assumption used for the run
 - if image-specific CLI capability is not actually verified in the current host,
   say so and do not pretend shell availability alone proves the route is ready
+
+## Chinese-First Routing Rule
+
+If the image task is Chinese-first, default to a Gemini-family route before the
+host built-in image tool.
+
+Chinese-first usually means one or more of these are true:
+
+- the prompt is primarily written in Chinese
+- the image needs Chinese labels, signage, captions, or poster copy
+- Chinese semantic nuance matters to the subject or scene
+- prior built-in image runs already showed weaker Chinese understanding
+
+Route choice inside the Gemini family:
+
+- use Gemini CLI or Nano Banana when local execution is verified and shell
+  traceability is useful
+- use browser create-image with Gemini as the target site when the website path
+  is required or browser-only Gemini behavior matters
+- prefer `chrome-devtools` when the host exposes it and the Gemini website flow
+  is the intended route
+
+Important limit:
+
+- if exact publishable Chinese wording or later editing is the real requirement,
+  do not overpromise on raster generation just because Gemini is better than the
+  built-in path; consider diagram, slide, or vector workflows instead
 
 ## Route 4: Browser Create-Image Flow
 
@@ -129,6 +175,8 @@ Change route first when:
 - the prompt is already clear but the output keeps collapsing to defaults
 - one backend gives the right medium but wrong materials
 - one backend preserves identity better than another
+- the built-in path keeps weakening Chinese prompt intent or Chinese text
+  quality
 - the needed quality step exists only in one path
 - the deliverable is a text-heavy technical infographic and spelling keeps
   drifting

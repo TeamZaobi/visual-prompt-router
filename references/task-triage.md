@@ -13,6 +13,22 @@ Ask or infer these in order:
 4. What is the main focus of the frame
 5. Is this a one-off image or part of a larger pack
 
+## Native Execute Shortcut
+
+If all of these are true:
+
+- the selected route is the host-native image path
+- the user is asking for actual image generation
+- the user says `做图`, `出图`, `生成图片`, `generate image`, or similar direct
+  execution language
+
+Then:
+
+- treat the request as immediate execution intent
+- do not open tool-routing analysis first
+- only reopen routing if the native route is unavailable or the first native
+  round clearly shows a backend mismatch
+
 ## Common Deliverable Types
 
 ### 1. Clean Standing Illustration
@@ -63,6 +79,14 @@ Typical signals:
 - "MCP 图"
 - "框图"
 - "技术社区常见那种图"
+
+Important split:
+
+- If the user wants a plain enterprise architecture schematic, optimize for
+  strict structure and reserve visual personality.
+- If the user wants "社区常见那种清楚又好看"的解释图, infer a friendly teaching
+  infographic with icon metaphors, section rhythm, and warmer card language
+  rather than a dead corporate diagram.
 
 ### 5. Illustration Plus Chibi Figurine Product Shot
 
@@ -115,6 +139,9 @@ Typical signals:
   the layout map is underspecified
 - "the words keep spelling wrong":
   the text budget is too ambitious or the route is wrong
+- "结构对了但图太死、不生动":
+  the prompt is missing diagram posture, icon metaphors, and teaching-graphic
+  visual primitives
 
 ### If the user says "重新设计"
 

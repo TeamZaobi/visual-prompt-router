@@ -77,13 +77,13 @@ Use these as starting patterns. Replace the placeholders with real facts.
 ### Positive Prompt
 
 ```text
-干净现代的技术信息图 / 架构解释图，用于把[主题]清楚讲给初学者，不是海报，不是 UI 截图。画面先锁版式再谈风格：整体为[上下两区 / 四列结构 / 底部组件区]，第一眼先看到[标题]，第二眼看到[核心关系，例如 Host -> Client -> Server -> Resource]，第三眼才看到[底部组件或补充说明]。明确写出每个区域的职责、列关系和卡片数量，例如左列是[主机或来源]，中列是[桥接或客户端]，中右列是[服务或处理层]，右列是[目标资源或外部系统]。标签只保留短词或短语，尽量重复使用相同标签，不要塞段落。图标语言为扁平、圆角、轻描边、友好教育风格，背景干净留白充足，箭头关系清楚，配色为[浅绿 / 浅黄 / 浅蓝 / 浅紫等柔和配色]。整体像高质量教学信息图，而不是营销海报。
+干净现代、友好生动的技术信息图 / 架构解释图，用于把[主题]清楚讲给初学者，不是海报，不是 UI 截图，也不是死板企业框图。画面先锁版式再谈风格：整体为[上下两区 / 四列结构 / 底部组件区]，第一眼先看到[顶部标题带或标题 badge]，第二眼看到[核心关系，例如 Host -> Client -> Server -> Resource]，第三眼才看到[底部组件或补充说明]。明确写出每个区域的职责、列关系和卡片数量，例如左列是[主机或来源]，中列是[桥接或客户端]，中右列是[服务或处理层]，右列是[目标资源或外部系统]。画面姿态指定为友好教学信息图：使用圆角卡片、轻描边、细虚线或清晰教学箭头、柔和的分区色块、顶部 section label、轻微纸面感或干净讲义感，而不是产品 dashboard。为每个角色指定不同的节点造型：主机区是一个较大的父面板，里面放 app-like source tiles；客户端是较小的 bridge cards；服务器是重复的 server-stack cards；资源区是带一个大图标和短标签的 target cards；底部组件区是整齐的小胶囊卡片或 mini badges。为每个大区指定颜色角色，例如主机区偏暖色、客户端偏对比色、服务器区稳重服务色、资源区偏清爽支持色、底部组件区更轻更浅。为每个关键节点指定直观图标隐喻，例如应用或主机用 app tile / laptop，服务器用 server stack，文件系统用 laptop-plus-folder，数据库用 cylinder，互联网或 API 用 globe plus small service badges。标签只保留短词或短语，尽量重复使用相同标签，不要塞段落。背景干净留白充足，组件区有规律地排布成小卡片，整体像高质量技术课程信息图，既结构清楚又有亲和力和节奏感。
 ```
 
 ### Negative Prompt
 
 ```text
-不要海报感，不要假 PPT 模板感，不要深色科技风，不要重渐变，不要大段文字，不要把多个资源区合并成一个大面板，不要乱加框，不要乱改箭头关系，不要难以辨认的小字。
+不要海报感，不要假 PPT 模板感，不要深色科技风，不要重渐变，不要大段文字，不要只有冷冰冰的 corporate boxes，不要把多个资源区合并成一个大面板，不要乱加框，不要乱改箭头关系，不要难以辨认的小字，不要把信息图做成 dashboard、网络拓扑图或营销封面。
 ```
 
 ### Note
@@ -92,3 +92,9 @@ If exact labels, spelling accuracy, or later editability are critical, use this
 prompt to lock style and layout direction first, then rebuild the final diagram
 in a vector or diagram tool instead of treating the raster result as final by
 default.
+
+### Protocol Explainer Example
+
+```text
+Model Context Protocol (MCP) explained as a friendly technical teaching infographic, not a poster, not a sterile enterprise architecture box diagram. Wide landscape layout. Top title band with a highlighted badge-style title and a short explanatory subtitle. The upper main zone is a left-to-right protocol relationship map. The far-left host zone is one larger rounded parent panel containing three app-like source tiles: Claude Desktop, IDE, AI Tools. The next column contains three smaller bridge cards labeled MCP Client. The next column contains three repeated service-stack cards labeled MCP Server. The far-right column contains three literal target cards: Local Filesystem shown as laptop-plus-folder, Database shown as a cylinder icon, Internet / Web APIs shown as a globe with tiny API/service badges. Use neat dashed teaching arrows and clear directional connectors so the flow Host -> Client -> Server -> Resource is obvious at a glance. Add a separate lower band with a visible Key Components badge, containing compact mini cards or chips for Transport Layers, Notification, Sampling, Tools, Resources, Prompts. Use role-based color identity: warm host group, contrasting client bridge group, stable server group, clean support color for resources, lighter calmer band for bottom components. Rounded cards, light outlines, subtle shadow depth, soft off-white background, clean spacing, high readability, curated educational infographic rhythm, approachable but professional.
+```

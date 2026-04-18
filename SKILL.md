@@ -34,7 +34,7 @@ It solves five questions:
 
 - It does not invent source facts that the user did not provide.
 - It does not treat generated images as truth.
-- It does not make one backend canonical.
+- It does not make one backend canonical for every task.
 - It does not force execution when the user only wants prompts.
 
 ## Use This Skill When
@@ -54,6 +54,8 @@ It solves five questions:
 - Need to classify the job before writing prompts: [references/task-triage.md](./references/task-triage.md)
 - Need the prompt-building method and reusable skeleton: [references/prompt-assembly.md](./references/prompt-assembly.md)
 - Need common deliverable templates and examples: [references/patterns-and-examples.md](./references/patterns-and-examples.md)
+- Need the controlled improvement loop for architecture or protocol infographic
+  prompts: [references/architecture-ab-test-loop.md](./references/architecture-ab-test-loop.md)
 - Need routing rules across prompt-only, built-in, CLI, and browser paths:
   [references/backend-routing.md](./references/backend-routing.md)
 - Need concrete preflight checks before promising an execution path:
@@ -89,10 +91,85 @@ It solves five questions:
     those dependencies explicitly instead of assuming the next turn can recover
     them from chat history.
 11. If two rounds fail in the same direction, consider rerouting instead of
-   endlessly rewriting the prompt.
-12. For text-heavy diagrams, layout map and text budget beat style adjectives.
-13. If exact labels or later editability are hard requirements, do not pretend a
-    raster image is automatically the final deliverable.
+    endlessly rewriting the prompt.
+12. For Chinese-first image tasks, default to a Gemini-family route instead of
+    the host built-in image tool unless the user explicitly wants a rough draft
+    or explicitly requests another path.
+13. Once the selected route is the host's native image tool and the user has
+    explicitly asked to make the image such as `做图`, `出图`, `生成图片`,
+    `generate image`, or `render`, execute directly instead of expanding route
+    analysis first.
+14. Route, adapter, and tool-call discussion are primarily for non-native
+    execution paths such as `Gemini CLI`, `Nano Banana`, `chrome-devtools`,
+    `playwright`, or browser create-image flows.
+15. For text-heavy diagrams, layout map and text budget beat style adjectives.
+16. If exact labels or later editability are hard requirements, do not pretend a
+   raster image is automatically the final deliverable.
+17. If the user gives only architecture or flow relationships but the requested
+   deliverable is a technical infographic, do not default to a dead enterprise
+   diagram. Infer a friendly educational visual system with concrete title
+   treatment, section markers, card language, arrow language, and icon
+   metaphors.
+18. For community-style explainers, give each role its own node anatomy and
+    color role. Do not let host, client, server, resource, and component cards
+    all collapse into the same anonymous rectangle style.
+19. For protocol or architecture teaching infographics, generic words such as
+    `clean`, `modern`, `friendly`, or `professional` are not enough by
+    themselves. The prompt should explicitly lock concrete visual primitives:
+    title badge or title ribbon treatment, dashed teaching arrows, literal icon
+    metaphors for resource cards, and role-based color mapping.
+20. For protocol explainers that name specific resource targets, do not stop at
+    `simple icons` or `recognizable icons`. Name the actual metaphor for each
+    target whenever possible, such as `laptop-plus-folder`, `database
+    cylinder`, or `globe with API badges`.
+
+## Technical Infographic Minimum
+
+When the deliverable is a protocol explainer, architecture explainer, or
+community-style technical infographic, the emitted prompt should explicitly
+encode these visual primitives before you consider it done:
+
+1. a highlighted title badge, title ribbon, or title band
+2. an upper main relationship map plus a lower support band
+3. host as a larger parent panel with app-like child tiles
+4. clients as bridge cards
+5. servers as repeated service-stack cards
+6. dashed teaching arrows
+7. resource cards with explicit icon metaphors
+8. role-based color mapping across host, client, server, resource, and lower
+   band
+9. a lighter secondary treatment for the lower band
+
+Default concrete resource metaphors for protocol explainers:
+
+- `Local Filesystem` -> `laptop-plus-folder`
+- `Database` -> `database cylinder`
+- `Internet / Web APIs` -> `globe with API or service badges`
+
+Do not emit the final prompt with weaker substitutions such as:
+
+- `top title area`
+- `clean connectors`
+- `simple icons`
+- `recognizable icons`
+- `soft colors`
+
+Rewrite those into concrete visual primitives before finishing.
+
+Preferred default wording for protocol explainers:
+
+- `top title band with a highlighted badge-style title and short subtitle`
+- `upper main zone as a left-to-right relationship map`
+- `host as a larger rounded parent panel containing app-like source tiles`
+- `clients as smaller bridge cards`
+- `servers as repeated service-stack cards`
+- `resources as literal target cards`
+- `use neat dashed teaching arrows so the flow reads instantly`
+- `Local Filesystem as laptop-plus-folder, Database as cylinder, Internet / Web APIs as globe with API badges`
+- `warm host tones, contrast client tones, stable server tones, clean support tones for resources, lighter calmer tones for the lower band`
+
+If you are writing a protocol explainer prompt from sparse relationship facts,
+start from those phrases and then adapt them to the user's subject.
 
 ## Core Workflow
 
@@ -130,6 +207,9 @@ Before writing the main prompt, answer:
 - What should the viewer feel first
 - What is the main focus
 - Is the background structural, atmospheric, or minimal
+- Is this meant to feel like a strict schematic or a friendly teaching
+  infographic
+- Is the task Chinese-first enough that route choice should prefer Gemini
 - Does text accuracy or later editability matter enough to affect route choice
 
 ### 4. Build the Prompt
@@ -147,14 +227,30 @@ Use the medium-first structure:
 9. consistency constraints
 10. negative constraints
 
+For technical infographics, also force a concrete visual-system layer:
+
+1. title badge or title ribbon treatment
+2. upper main zone and lower support band
+3. host as parent panel with app-like child tiles
+4. clients as bridge cards
+5. servers as repeated service-stack cards
+6. resources as literal target cards with explicit icon metaphors
+7. dashed teaching arrows
+8. role-based color mapping by section
+9. lighter secondary treatment for the bottom band
+
 Detailed guidance and templates live in
 [references/prompt-assembly.md](./references/prompt-assembly.md).
 
 ### 5. Pick the Route
 
 - If the user wants only wording, stop at prompt delivery
-- If the host image tool is enough, use the built-in path
-- If the task depends on Gemini CLI or Nano Banana strengths, use that route
+- If the task is Chinese-first, prefer a Gemini-family route before the host
+  built-in image path unless the user explicitly asks otherwise
+- If the host image tool is enough and the chosen route is native, execute
+  directly once the user has clearly asked to make the image
+- If the task depends on Gemini CLI, Nano Banana, or Gemini website strengths,
+  use that route
 - If the task depends on browser-only create-image flow or high-res downloads,
   use browser automation only after confirming the host can actually drive a
   browser for that turn; otherwise fall back cleanly
@@ -164,11 +260,16 @@ Detailed routing rules live in
 
 ### 6. Preflight And Externalize State
 
-Before execution, do two things:
+Before non-native execution, do two things:
 
 1. run a route preflight that verifies the actual adapter or command surface
 2. create a small route card that captures prompt source, adapter, artifact
    directory, expected outputs, and current blocker state
+
+For the host-native image route, the rule is simpler: if the native image
+surface is available in this turn and the user explicitly asked to make the
+image, execute first and only reopen route analysis if that native round fails
+for route reasons.
 
 Do not treat a browser tab, MCP session, or previous tool call as durable state
 unless you have written the important details down.
@@ -186,8 +287,9 @@ Check the result against the acceptance dimensions, especially:
 2. fit to the requested medium
 3. layout integrity
 4. text fidelity when labels matter
-5. design and aesthetic quality
-6. usefulness as a downstream anchor
+5. pedagogical warmth and visual liveliness
+6. design and aesthetic quality
+7. usefulness as a downstream anchor
 
 If the image is wrong, decide whether the fault is:
 

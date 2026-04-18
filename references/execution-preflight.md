@@ -20,7 +20,7 @@ Do not collapse these into one claim:
 
 ## Route-Level Preflight
 
-Before executing any non-trivial image route, confirm:
+Before executing any non-native image route, confirm:
 
 1. the selected route
 2. the exact adapter or tool surface
@@ -35,6 +35,13 @@ Confirm:
 1. the host actually exposes an image-generation tool in this turn
 2. the task does not require browser-only download or site-only behavior
 3. the user did not explicitly ask for prompt-only
+4. the selected route is actually the built-in route for this task
+
+If those pass, execute.
+
+Do not turn the built-in path into a separate tool-routing discussion. The
+heavy preflight ritual is for non-native routes, not for a native in-thread
+image call that is already selected.
 
 If any of those fail, change route.
 
@@ -46,6 +53,11 @@ Minimum checks:
 2. the CLI help or version command succeeds
 3. the exact invocation style is known
 4. the route card captures prompt source and output location
+
+Default preference:
+
+- prefer this route family for Chinese-first image tasks when local Gemini
+  execution is actually verified in the current host
 
 Important distinction:
 
