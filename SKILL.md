@@ -69,6 +69,9 @@ It solves five questions:
   [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md)
 - Need the case-first retrieval rule instead of blind zero-shot prompting:
   [references/case-driven-prompting.md](./references/case-driven-prompting.md)
+- Need concrete benchmark images or assembled benchmark boards for each
+  recurring deliverable family:
+  [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
@@ -204,6 +207,11 @@ It solves five questions:
 40. For visual tasks, image examples outrank prompt-only examples. If both are
     available, learn the visual target from the approved image first, then use
     the old prompt only as supporting evidence for how that result was reached.
+41. For recurring deliverable families, case-first is not complete until one
+    concrete benchmark image or assembled benchmark board has been selected.
+42. If no exact single public image exists for a recurring family, assemble a
+    benchmark board from the strongest public clues and record the provenance
+    instead of pretending a vague search result is a gold-standard case.
 
 ## Technical Infographic Minimum
 

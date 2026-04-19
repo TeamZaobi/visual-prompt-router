@@ -30,11 +30,13 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md): keep JSON or metadata on the source side, then compile into the final image prompt
 - [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md): file roles, run-pack layout, and the default stable operating path
 - [references/case-driven-prompting.md](./references/case-driven-prompting.md): retrieve similar approved cases before writing the new prompt
+- [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md): concrete benchmark images and assembled benchmark boards for each recurring deliverable family
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
 - [references/acceptance-and-reroute.md](./references/acceptance-and-reroute.md): review, acceptance, and reroute criteria
 - [assets/file-driven-run-pack/README.md](./assets/file-driven-run-pack/README.md): copyable run-pack templates for repeatable execution
+- [assets/gold-standard-benchmarks/README.md](./assets/gold-standard-benchmarks/README.md): stored benchmark images used by case-first retrieval
 - [scripts/visual_route_probe.py](./scripts/visual_route_probe.py): local shell probe for route readiness
 - [agents/openai.yaml](./agents/openai.yaml): compact agent-facing launcher metadata
 
@@ -56,6 +58,9 @@ This repo is designed for image-generation prompt work across tasks such as:
    instead of hoping for a clean zero-shot hit.
 11. In visual work, the strongest case is the approved image itself. Prompt-only
    precedent is secondary evidence, not the primary example.
+12. Each recurring deliverable family should resolve to one concrete benchmark
+   image or one concrete assembled benchmark board before case-first work is
+   considered complete.
 
 ## Technical Infographic Guidance
 

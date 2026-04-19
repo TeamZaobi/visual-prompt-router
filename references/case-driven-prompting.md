@@ -54,8 +54,8 @@ Strong case sources:
 1. approved project-local images in the same family
 2. approved prior runs in `./.codex/visual-runs/` with visible outputs
 3. user-provided approved images or screenshots
-4. approved project-local prompt and image pairs
-5. stable benchmark prompt-and-image examples in this skill
+4. stable benchmark images or assembled benchmark boards in this skill
+5. approved project-local prompt and image pairs
 
 Weak case sources:
 
@@ -91,7 +91,8 @@ For a new run, search in this order:
 1. same project, same deliverable family, same image posture
 2. same semantic tier pattern and same visual anatomy
 3. same route and same website behavior
-4. general skill benchmark image examples
+4. benchmark assets from `gold-standard-image-registry.md`
+5. general skill benchmark image examples
 
 This matters because:
 
@@ -133,17 +134,20 @@ Do not over-copy:
 For a file-driven run, record retrieved cases in:
 
 - `01b-case-references.md`
+- if a stable benchmark exists in this skill, prefer recording that benchmark
+  asset explicitly instead of only recording the source page
 
 Each entry should state:
 
 1. case source
 2. case type such as `image precedent`, `prompt precedent`, or `clue source`
-3. image reference or path
-4. similarity
-5. visual lessons to keep
-6. prompt or route lessons to keep
-7. what not to inherit blindly
-8. whether the case teaches image posture, prompt structure, route behavior, or
+3. benchmark asset when one exists
+4. image reference or path
+5. similarity
+6. visual lessons to keep
+7. prompt or route lessons to keep
+8. what not to inherit blindly
+9. whether the case teaches image posture, prompt structure, route behavior, or
    several of them
 
 ## Compilation Rule

@@ -110,6 +110,9 @@ Use it to record the closest approved precedents and the specific lessons to
 borrow.
 
 Prefer cases that include approved images, not prompt text alone.
+If project-local approved cases do not exist yet, pull the closest stored
+benchmark from `gold-standard-image-registry.md` before falling back to looser
+web search.
 
 Create:
 

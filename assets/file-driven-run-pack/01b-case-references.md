@@ -4,6 +4,7 @@
 
 - Source:
 - Case type:
+- Benchmark asset:
 - Image:
 - Similarity:
 - Visual lessons to keep:
