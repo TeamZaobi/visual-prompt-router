@@ -2,21 +2,42 @@
 
 Use this file after generation or when reviewing an existing image.
 
+For multi-round work, use this together with
+`evaluation-and-reflection-loop.md`.
+
+Short rule:
+
+- `acceptance` decides the verdict
+- `reflection` decides the next experiment
+
+Do not collapse them into one fuzzy review note.
+
 ## Acceptance Checklist
 
-Score the image against these dimensions:
+Check hard gates first, then score the softer dimensions.
+
+Hard gates:
 
 1. source accuracy
 2. medium fit
-3. design consistency
-4. layout integrity
-5. semantic hierarchy and policy boundary clarity
-6. role clarity and node anatomy
-7. pedagogical warmth and visual liveliness
-8. text fidelity
-9. material quality
-10. emotional order
-11. downstream usefulness
+3. semantic hierarchy and policy boundary clarity when relevant
+4. text fidelity when labels matter
+
+Soft dimensions:
+
+1. design consistency
+2. layout integrity
+3. role clarity and node anatomy
+4. pedagogical warmth and visual liveliness
+5. material quality
+6. emotional order
+7. downstream usefulness
+
+Promotion default:
+
+- all relevant hard gates pass
+- the image is strong enough for its downstream role
+- remaining defects are non-critical
 
 ## Typical Failure Modes
 
@@ -173,3 +194,9 @@ After review:
 - keep one representative failed variant when it proves why rerouting happened
 - keep only necessary failed variants for comparison
 - remove disposable previews, duplicates, and scratch files
+
+For iterative runs:
+
+- write the verdict in `05-acceptance.md`
+- write the attribution, keep-list, and single next-change hypothesis in
+  `06-run-notes.md`

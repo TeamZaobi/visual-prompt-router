@@ -31,6 +31,7 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md): file roles, run-pack layout, and the default stable operating path
 - [references/case-driven-prompting.md](./references/case-driven-prompting.md): retrieve similar approved cases before writing the new prompt
 - [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md): concrete benchmark images and assembled benchmark boards for each recurring deliverable family
+- [references/evaluation-and-reflection-loop.md](./references/evaluation-and-reflection-loop.md): per-round evaluation, diagnosis, and sedimentation rules for iterative image work
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
@@ -61,6 +62,8 @@ This repo is designed for image-generation prompt work across tasks such as:
 12. Each recurring deliverable family should resolve to one concrete benchmark
    image or one concrete assembled benchmark board before case-first work is
    considered complete.
+13. In iterative runs, evaluation and reflection must stay separate: round
+   verdict first, failure attribution and next-change hypothesis second.
 
 ## Technical Infographic Guidance
 

@@ -79,6 +79,8 @@ Why this layout works:
 3. browser state becomes resumable
 4. acceptance gets written before the next random retry
 5. the final promotion into the project path happens only after review
+6. evaluation and reflection stay separate instead of collapsing into vague
+   taste talk
 
 ## Stable Main Path
 
@@ -191,10 +193,13 @@ Use it to record:
 - what failed
 - whether the problem is source, prompt, route, or output quality
 - whether the next action is refine, reroute, or promote
+- which benchmark asset the round was judged against
+- whether the result is better, same, or worse than the previous round
 
 Rule:
 
 - no new prompt round before the previous round has an acceptance record
+- write the objective verdict here before reflection begins
 
 ## Step 7. Keep Notes Small But Real
 
@@ -208,8 +213,13 @@ Use it for:
 - overwritten filenames
 - download timing behavior
 - why a route changed
+- dominant failure layer
+- what to keep from the current round
+- the single next-change hypothesis
+- whether the lesson is project-local or should be sedimented into the skill
 
 Do not hide critical route state here if it belongs in `04-route-card.json`.
+Do not hide the round verdict here if it belongs in `05-acceptance.md`.
 
 ## Step 8. Promote Only Approved Output
 

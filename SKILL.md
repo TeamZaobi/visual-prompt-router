@@ -72,6 +72,8 @@ It solves five questions:
 - Need concrete benchmark images or assembled benchmark boards for each
   recurring deliverable family:
   [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md)
+- Need a stable per-round evaluation and reflection loop for iterative work:
+  [references/evaluation-and-reflection-loop.md](./references/evaluation-and-reflection-loop.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
@@ -212,6 +214,11 @@ It solves five questions:
 42. If no exact single public image exists for a recurring family, assemble a
     benchmark board from the strongest public clues and record the provenance
     instead of pretending a vague search result is a gold-standard case.
+43. In iterative runs, write the round verdict before writing reflection. Do
+    not merge acceptance, diagnosis, and next-step ideation into one vague
+    paragraph.
+44. Each new round should change one primary variable unless the previous round
+    was too broken for narrower diagnosis to be meaningful.
 
 ## Technical Infographic Minimum
 
@@ -484,6 +491,13 @@ Check the result against the acceptance dimensions, especially:
 6. design and aesthetic quality
 7. usefulness as a downstream anchor
 
+For iterative runs, also lock:
+
+1. which benchmark asset this round is being judged against
+2. whether the round is better, same, or worse than the previous round
+3. which hard gate failed first
+4. which single primary variable should change next
+
 If the image is wrong, decide whether the fault is:
 
 - source mismatch
@@ -494,7 +508,8 @@ If the image is wrong, decide whether the fault is:
 - low-quality random variation
 
 For file-driven runs, record the review result in `05-acceptance.md` before you
-change route or rewrite the prompt again.
+change route or rewrite the prompt again, then write the failure attribution and
+single next-change hypothesis into `06-run-notes.md`.
 
 ### 8. Close Cleanly
 
