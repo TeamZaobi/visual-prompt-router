@@ -97,6 +97,20 @@ If not, create a workspace-local run directory such as:
 ./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
 ```
 
+Preferred file-driven layout inside that directory:
+
+```text
+./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
+  00-visual-task.md
+  01-structured-source.json
+  02-final-prompt.txt
+  03-adapter-decision.json
+  04-route-card.json
+  05-acceptance.md
+  06-run-notes.md
+  artifacts/
+```
+
 Keep there:
 
 - prompt snapshot
@@ -104,6 +118,13 @@ Keep there:
 - downloaded images
 - chosen candidates
 - blocker notes
+
+If you are using the standard pack:
+
+- `00-visual-task.md` and `01-structured-source.json` are the truth source
+- `02-final-prompt.txt`, `03-adapter-decision.json`, and `04-route-card.json`
+  are execution objects
+- `05-acceptance.md` and `06-run-notes.md` are status projections
 
 If the site saves outside the workspace first, keep both:
 

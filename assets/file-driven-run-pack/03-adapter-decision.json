@@ -1,0 +1,16 @@
+{
+  "recommended_adapter": "",
+  "session_model": "",
+  "fallback_adapter": "",
+  "reason_codes": [],
+  "blockers": [],
+  "prohibited_moves": [],
+  "download_policy": {
+    "single_flight": false,
+    "effective_click_required": false,
+    "local_file_success_required": false,
+    "materialization_grace_window_seconds": 0
+  },
+  "confidence": "",
+  "evidence_quality": ""
+}

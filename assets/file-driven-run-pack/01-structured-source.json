@@ -1,0 +1,24 @@
+{
+  "task": "",
+  "deliverable": "",
+  "use_case": "",
+  "render_text": {
+    "title": "",
+    "labels": []
+  },
+  "semantic_tiers": {
+    "primary_surface": "",
+    "operational_hinge": "",
+    "backstage_formal_service": ""
+  },
+  "facts": [],
+  "relations": [],
+  "forbid": [],
+  "style": {
+    "ratio": "16:9",
+    "background": "",
+    "look": "",
+    "colors": {}
+  },
+  "acceptance": []
+}

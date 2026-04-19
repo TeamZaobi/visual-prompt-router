@@ -28,10 +28,12 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/browser-adapter-best-practices.md](./references/browser-adapter-best-practices.md): when to use `playwright`, `chrome-devtools`, or `computer-use`
 - [references/browser-adapter-decision-tree.md](./references/browser-adapter-decision-tree.md): JSON metadata and deterministic adapter choice
 - [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md): keep JSON or metadata on the source side, then compile into the final image prompt
+- [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md): file roles, run-pack layout, and the default stable operating path
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
 - [references/acceptance-and-reroute.md](./references/acceptance-and-reroute.md): review, acceptance, and reroute criteria
+- [assets/file-driven-run-pack/README.md](./assets/file-driven-run-pack/README.md): copyable run-pack templates for repeatable execution
 - [scripts/visual_route_probe.py](./scripts/visual_route_probe.py): local shell probe for route readiness
 - [agents/openai.yaml](./agents/openai.yaml): compact agent-facing launcher metadata
 
@@ -47,6 +49,8 @@ This repo is designed for image-generation prompt work across tasks such as:
    built-in image path.
 8. Structured metadata is a good source format, but raw JSON is usually a bad
    final Gemini website prompt.
+9. If the job will be executed or revisited, use a file-driven run pack instead
+   of relying on chat memory.
 
 ## Technical Infographic Guidance
 

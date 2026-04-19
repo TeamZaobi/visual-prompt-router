@@ -65,6 +65,8 @@ It solves five questions:
   [references/browser-adapter-decision-tree.md](./references/browser-adapter-decision-tree.md)
 - Need the rule for structured metadata versus final image prompt:
   [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md)
+- Need the file-driven operating model and standard run-pack layout:
+  [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
@@ -183,6 +185,13 @@ It solves five questions:
     render instructions before sending it to the image model. Keep keys,
     quotes, and schema words on the source side, not in the final render
     prompt.
+36. If the task will be executed, resumed later, compared across rounds, or
+    handed between agents, externalize it into a file-driven run pack before
+    running tools.
+37. In a file-driven run pack, treat prompt source files as truth source, route
+    decisions and prompt snapshots as execution objects, review checklists as
+    status projections, and only the approved promoted artifact as the display
+    projection.
 
 ## Technical Infographic Minimum
 
@@ -241,6 +250,41 @@ start from those phrases and then adapt them to the user's subject.
 
 ## Core Workflow
 
+### 0. Choose The File Boundary
+
+If the task is a one-turn `prompt-only` answer, stay lightweight.
+
+If the task will be executed, resumed, compared, or reviewed across rounds,
+create a run pack first.
+
+Preferred layout:
+
+```text
+./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
+  00-visual-task.md
+  01-structured-source.json
+  02-final-prompt.txt
+  03-adapter-decision.json
+  04-route-card.json
+  05-acceptance.md
+  06-run-notes.md
+  artifacts/
+```
+
+File roles:
+
+- `00-visual-task.md` and `01-structured-source.json`
+  - truth source
+- `02-final-prompt.txt`, `03-adapter-decision.json`, and `04-route-card.json`
+  - execution objects
+- `05-acceptance.md` and `06-run-notes.md`
+  - status projections
+- promoted approved image in the project path
+  - display projection
+
+Do not write directly into the final project artifact path before the result is
+accepted.
+
 ### 1. Classify the Job
 
 Choose one primary mode:
@@ -265,6 +309,10 @@ Read inputs in this order:
 
 Do not let a reference image silently override explicit textual facts unless the
 user says the image should lead.
+
+If you created a run pack, write the source facts and constraints into
+`00-visual-task.md` and `01-structured-source.json` before you write the final
+prompt.
 
 ### 3. Lock the Deliverable
 
@@ -316,7 +364,8 @@ layer:
 4. boundary language that forbids direct frontstage access when relevant
 
 Detailed guidance and templates live in
-[references/prompt-assembly.md](./references/prompt-assembly.md).
+[references/prompt-assembly.md](./references/prompt-assembly.md) and
+[references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md).
 
 ### 5. Pick the Route
 
@@ -342,6 +391,12 @@ Before non-native execution, do two things:
 2. create a small route card that captures prompt source, adapter, artifact
    directory, expected outputs, and current blocker state
 
+For file-driven runs, also write:
+
+1. `02-final-prompt.txt`
+2. `03-adapter-decision.json`
+3. `04-route-card.json`
+
 For browser create-image routes, the route card should also capture:
 
 1. the exact download control that is supposed to produce the final asset
@@ -362,6 +417,7 @@ Do not treat a browser tab, MCP session, or previous tool call as durable state
 unless you have written the important details down.
 
 Detailed guidance lives in
+[references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md),
 [references/execution-preflight.md](./references/execution-preflight.md),
 [references/dispatch-contract.md](./references/dispatch-contract.md), and
 [references/state-capture-and-resume.md](./references/state-capture-and-resume.md).
@@ -387,11 +443,21 @@ If the image is wrong, decide whether the fault is:
 - text-fidelity mismatch
 - low-quality random variation
 
+For file-driven runs, record the review result in `05-acceptance.md` before you
+change route or rewrite the prompt again.
+
 ### 8. Close Cleanly
 
 - keep the approved image, prompt, and any required notes
 - drop expendable failed candidates and temporary files
 - promote methods into reusable guidance, not project facts into the skill
+
+For file-driven runs:
+
+- keep `00-06` files and the approved artifact
+- clean expendable failed candidates from `artifacts/`
+- do not let diagnostics, wrong-route screenshots, or raw experimental prompt
+  variants leak into the final project display path
 
 ## Default Output Shape
 

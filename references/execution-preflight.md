@@ -28,6 +28,16 @@ Before executing any non-native image route, confirm:
 4. whether there are approval, login, session, or download constraints
 5. where artifacts will go
 
+If the run is expected to span turns, include browser state, or produce several
+rounds of candidates, create the standard run-pack files first rather than
+keeping the route only in chat memory:
+
+- `00-visual-task.md`
+- `01-structured-source.json`
+- `02-final-prompt.txt`
+- `03-adapter-decision.json`
+- `04-route-card.json`
+
 For non-trivial browser adapter choice, emit normalized decision metadata first.
 Use [browser-adapter-decision-tree.md](./browser-adapter-decision-tree.md)
 instead of skipping straight to prose.
