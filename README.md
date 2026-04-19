@@ -25,6 +25,9 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/prompt-assembly.md](./references/prompt-assembly.md): medium-first prompt method
 - [references/patterns-and-examples.md](./references/patterns-and-examples.md): reusable prompt patterns
 - [references/backend-routing.md](./references/backend-routing.md): routing logic across image workflows
+- [references/browser-adapter-best-practices.md](./references/browser-adapter-best-practices.md): when to use `playwright`, `chrome-devtools`, or `computer-use`
+- [references/browser-adapter-decision-tree.md](./references/browser-adapter-decision-tree.md): JSON metadata and deterministic adapter choice
+- [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md): keep JSON or metadata on the source side, then compile into the final image prompt
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
@@ -42,6 +45,8 @@ This repo is designed for image-generation prompt work across tasks such as:
 6. Execution state has to be externalized if the route spans turns.
 7. Chinese-first image tasks should default to a Gemini-family route, not the
    built-in image path.
+8. Structured metadata is a good source format, but raw JSON is usually a bad
+   final Gemini website prompt.
 
 ## Technical Infographic Guidance
 

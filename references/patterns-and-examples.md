@@ -98,3 +98,35 @@ default.
 ```text
 Model Context Protocol (MCP) explained as a friendly technical teaching infographic, not a poster, not a sterile enterprise architecture box diagram. Wide landscape layout. Top title band with a highlighted badge-style title and a short explanatory subtitle. The upper main zone is a left-to-right protocol relationship map. The far-left host zone is one larger rounded parent panel containing three app-like source tiles: Claude Desktop, IDE, AI Tools. The next column contains three smaller bridge cards labeled MCP Client. The next column contains three repeated service-stack cards labeled MCP Server. The far-right column contains three literal target cards: Local Filesystem shown as laptop-plus-folder, Database shown as a cylinder icon, Internet / Web APIs shown as a globe with tiny API/service badges. Use neat dashed teaching arrows and clear directional connectors so the flow Host -> Client -> Server -> Resource is obvious at a glance. Add a separate lower band with a visible Key Components badge, containing compact mini cards or chips for Transport Layers, Notification, Sampling, Tools, Resources, Prompts. Use role-based color identity: warm host group, contrasting client bridge group, stable server group, clean support color for resources, lighter calmer band for bottom components. Rounded cards, light outlines, subtle shadow depth, soft off-white background, clean spacing, high readability, curated educational infographic rhythm, approachable but professional.
 ```
+
+## 7. Leadership Briefing Architecture Explainer
+
+### Positive Prompt
+
+```text
+领导汇报型架构解释图，用于向非技术决策者在 30 秒内讲清 [主题] 的当前演示主面、治理转接与后台正式服务入口。不是工程流程图，不是 mermaid，不是 draw.io，不是海报。宽幅 16:9，阅读顺序稳定。第一眼先看到[当前可演示主面]，这是画面权重最大的区域；第二眼看到[治理 / 审核 / 回执 / 编排]，它是连接前台诉求与后台正式服务的枢纽；第三眼才看到[后台正式服务入口]，它必须显式存在，但视觉权重次于主面，不能被藏进注释，也不能画成全图最大的数据库。整体结构为[左中右 / 上中下]三层语义分区：前台或演示面板负责说明“现在能展示什么”；中间枢纽负责说明“怎样受控进入正式态”；后台正式服务面板负责说明“正式服务并未缺席，只是受控开放”。箭头必须表达边界：前台不能直接连到正式服务，必须经过枢纽或治理节点。画面姿态是克制、清楚、有交付气质的领导汇报图：题签较小，留白充足，卡片层级稳定，分区色有主次，图标语义直接可懂。为三种语义层指定不同的节点语言：主面用较大的演示卡片或能力面板；枢纽用较紧凑但醒目的审批 / 回执 / 编排卡；后台正式服务用较小、更稳重的服务面板或人工受控操作面，不贴边，不漂浮，不抢主面。标签只保留短词，避免长句和密集说明。整体像高质量交付汇报配图，而不是研发流程图。
+```
+
+### Negative Prompt
+
+```text
+不要四块平均用力，不要所有模块同等大小，不要把后台正式服务藏进脚注，不要前台直连正式数据或正式服务，不要 giant database，不要工程流程图质感，不要 mermaid / draw.io 默认框线，不要海报化题签，不要堆大段说明文字。
+```
+
+### Semantic-Tier Repair Prompt
+
+```text
+保留当前整体风格，但修正语义层级：显式画出[后台正式服务入口]，并把它处理成后台正式服务，不是前台直连节点；保留[当前演示主面]为最大视觉重点；让[治理 / 审核 / 回执]成为前台进入后台的唯一枢纽；不要重新发明新模块。
+```
+
+### Briefing-Posture Repair Prompt
+
+```text
+保留当前结构关系，只把它收敛成更像领导汇报图：题签更小，留白更干净，构图更稳，后台正式服务不要贴边，不要海报化，不要工程图堆满。
+```
+
+### Icon-Semantic Repair Prompt
+
+```text
+保留当前布局、卡片层级和箭头关系，只修正图标语义：为[主面]、[枢纽]、[后台正式服务]换成更直观且互不混淆的图标；不要改布局，不要增删模块。
+```

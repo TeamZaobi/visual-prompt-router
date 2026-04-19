@@ -27,6 +27,10 @@ Example brief:
 - lower component/support band
 - roles, counts, and relationships explicitly listed
 - desired outcome: more alive than a dead enterprise diagram
+- if it is a leadership briefing diagram, explicitly define:
+  - current visible primary surface
+  - operational hinge
+  - backstage formal service that is explicit but secondary
 
 ## Phase 1: Prompt-Only Isolation
 
@@ -40,14 +44,18 @@ Subagents should:
 Judge the prompt on these criteria:
 
 1. does it lock the layout map
-2. does it lock teaching-infographic posture instead of enterprise diagram posture
-3. does it define role-based node anatomy
-4. does it define section rhythm and title treatment
-5. does it define icon metaphors
-6. does it define color-role mapping
-7. does it constrain text budget and readability
-8. does it explicitly lock title badge treatment and dashed teaching arrows
-9. does it explicitly lock literal resource icons instead of vague icon wording
+2. if the brief is a leadership briefing, does it lock semantic tiers instead of
+   treating all boxes equally
+3. does it lock teaching-infographic posture instead of enterprise diagram posture
+4. does it define role-based node anatomy
+5. does it define section rhythm and title treatment
+6. does it define icon metaphors
+7. does it define color-role mapping
+8. does it constrain text budget and readability
+9. does it explicitly lock title badge treatment and dashed teaching arrows
+10. does it explicitly lock literal resource icons instead of vague icon wording
+11. when needed, does it forbid direct frontstage links into the backstage
+    formal service
 
 If the answer is no on several of these, fix the skill before rendering images.
 
@@ -56,6 +64,32 @@ Fail the prompt if it still uses vague substitutions such as:
 - `top title area` instead of badge or ribbon treatment
 - `clean connectors` instead of dashed teaching arrows
 - `simple icons` or `recognizable icons` instead of explicit target metaphors
+
+## Briefing-Diagram Refinement Ladder
+
+When the target is a leadership briefing architecture explainer, separate the
+rounds:
+
+1. semantic completeness
+2. presentation hierarchy
+3. icon semantics
+
+Typical pass sequence:
+
+- round 1
+  - make the backstage formal service explicit
+  - restore the hinge
+  - remove illegal direct arrows
+- round 2
+  - reduce title size
+  - clean balance and whitespace
+  - keep the backstage service from looking edge-stuffed
+- round 3
+  - preserve layout
+  - replace wrong icons only
+
+Do not jump straight to rerouting because round 1 still looks ugly. The prompt
+and the backend are being asked different questions at each stage.
 
 ## Phase 2: Same-Channel Rendering
 
@@ -89,6 +123,9 @@ Strong isolated prompts usually contain language like:
 
 - top title band or title badge
 - upper architecture zone and lower components band
+- current visible primary surface
+- governance, review, or receipt hinge
+- backstage formal service that is explicit but secondary
 - host as parent panel with app-like source tiles
 - clients as bridge cards
 - servers as repeated service-stack cards
@@ -96,6 +133,7 @@ Strong isolated prompts usually contain language like:
 - compact chips or mini cards for components
 - dashed teaching arrows
 - role-based color identity
+- explicit boundary language when direct access is forbidden
 - soft off-white or paper-clean background
 
 Weak isolated prompts usually contain language like:

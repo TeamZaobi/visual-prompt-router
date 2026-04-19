@@ -28,6 +28,10 @@ Before executing any non-native image route, confirm:
 4. whether there are approval, login, session, or download constraints
 5. where artifacts will go
 
+For non-trivial browser adapter choice, emit normalized decision metadata first.
+Use [browser-adapter-decision-tree.md](./browser-adapter-decision-tree.md)
+instead of skipping straight to prose.
+
 ## Built-In Image Route
 
 Confirm:
@@ -82,12 +86,83 @@ First choose the actual adapter:
 2. browser-native MCP such as `chrome-devtools`
 3. desktop app control such as `computer-use`
 
+Do not choose by name alone. Verify the session model:
+
+- managed browser
+- isolated context
+- persistent profile
+- existing browser attach
+- front-window app control
+
 Then check:
 
 1. the adapter is actually callable in this host
 2. the target browser or app is controllable
 3. approval or permission gating will not block the route
 4. the route card records the browser/app and download assumptions
+5. the exact site control that produces the final asset is known
+6. the download completion check is known before clicking anything
+7. the run knows what will count as an effective download click
+8. the run knows how long it will wait before retrying or declaring the click
+   blocked
+
+### Adapter-Specific Checks
+
+For `playwright`, confirm:
+
+1. whether this host exposes enough Playwright surface for real page control,
+   not just tabs or window sizing
+2. whether the run is using a managed browser, a persistent profile, isolated
+   storage state, or an existing-tab bridge
+3. if existing live browser state is required, whether the official browser
+   extension or a deliberate CDP attach path is actually configured
+4. if CDP attach is the plan, acknowledge that it is a lower-fidelity path than
+   a native Playwright protocol session
+
+For `chrome-devtools`, confirm:
+
+1. whether the plan is MCP-managed browser, `--autoConnect`, or a
+   `--browser-url` / `--ws-endpoint` attach
+2. whether the running Chrome instance is actually debuggable
+3. whether the flow depends on a real existing logged-in session
+4. whether the chosen path uses an official existing-session attach flow rather
+   than copied profile files
+
+For `computer-use`, confirm:
+
+1. why the browser-native adapters are insufficient
+2. which exact UI interaction requires app-level control
+3. that the task is worth the added fragility of screen-driven interaction
+
+Download-specific distinction:
+
+Do not collapse these into one claim:
+
+- the page shows an image
+- the page has some download button
+- the exact full-resolution control has been clicked
+- the local file has finished materializing
+
+For Gemini website workflows, `Download Full size` on the image card or
+lightbox is not the same thing as a generic page-level download gesture.
+
+Also remember:
+
+- in small image-card state, the image-local controls may remain hidden until
+  the pointer hovers over the image region
+- `not visible before hover` is not the same as `not available`
+
+Minimum verification plan:
+
+1. intended download directory
+2. expected filename pattern if known
+3. whether the site may overwrite an old name
+4. how you will verify success: timestamp, size, dimensions, hash, or explicit
+   file-open confirmation
+5. whether another full-size download is already in flight
+6. whether hover over the image region is required to reveal the control
+7. what active-state or network evidence will confirm the click was effective
+8. what grace window will be allowed for delayed local materialization
 
 If the adapter is blocked by approval, do not say the route failed because of
 prompt quality.
@@ -106,6 +181,13 @@ Practical order:
 2. prefer the lightest browser-native adapter that can complete the workflow
 3. use app-level control only when lighter browser tools are unavailable or
    insufficient
+
+Host-surface caution:
+
+- `playwright` does not automatically mean DOM-complete browser automation
+- `chrome-devtools` does not automatically mean existing-session reuse is ready
+- if the exposed tool surface is thin, report that before the run becomes a
+  dead-end
 
 ## Shell Probe
 
@@ -139,3 +221,23 @@ Report the result in concrete terms:
 4. what remains unverified
 5. blocker, if any
 6. artifact directory or intended artifact directory
+
+Good wording:
+
+- `Gemini image preview rendered, but the full-size local file is not yet
+  verified.`
+- `The correct image-local full-size download control is known, and completion
+  will be verified by timestamp plus dimensions in Downloads.`
+- `The full-size click is only considered effective after Gemini shows loading
+  activity or equivalent request evidence, and the run will wait through the
+  defined materialization window before retrying.`
+- `No second full-size download will be triggered until the current Gemini
+  download has materialized or been declared blocked.`
+
+Bad wording:
+
+- `Downloaded` when only the preview image is visible
+- `No file appeared, so the download failed` immediately after the click with
+  no wait or overwrite check
+- `The button was clicked, so the download is running` when no active-state or
+  request evidence was observed

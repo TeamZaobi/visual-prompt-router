@@ -167,6 +167,102 @@ Rule:
 
 For technical infographics, layout nouns beat style adjectives.
 
+## Structured Source vs Final Prompt
+
+If the prompt is being assembled from structured metadata or JSON:
+
+- keep the structure as an internal source format
+- compile it into image-language instructions before sending it to Gemini
+- do not pass braces, key names, and schema labels through as if they were
+  image composition language
+
+See
+[structured-source-and-final-prompt.md](./structured-source-and-final-prompt.md)
+for the source-format rule and compiler guidance.
+
+### Leadership Briefing Architecture Explainer
+
+Use this variant when the image is for delivery reporting, executive briefing,
+or "30 seconds to explain it to a leader".
+
+Do not give every module equal narrative weight.
+
+Lock three semantic tiers explicitly:
+
+- current visible primary surface
+- operational hinge such as review, approval, receipt, governance, or
+  controlled orchestration
+- backstage formal service or formal destination
+
+Role of each tier:
+
+- the primary surface answers "what is already demonstrable now"
+- the hinge answers "how frontstage requests formally enter the controlled path"
+- the backstage formal service answers "the formal destination exists, but it
+  is not a direct frontstage touchpoint"
+
+Key rule:
+
+Explicit but secondary is not the same as hidden.
+
+If the existence of the backstage formal service is part of the story, do not
+bury it inside:
+
+- a note
+- a caption
+- a tiny corner label
+- an overly generic arrow
+
+### Visual Weight Rules For This Subtype
+
+- the primary surface should carry the largest visual weight
+- the hinge should be clearly legible as the formal gate or transfer point
+- the backstage service should be smaller or calmer than the primary surface,
+  but not squeezed to the edge or reduced to decoration
+- do not give all semantic tiers equal area, equal color intensity, or equal
+  narrative weight
+- if governance matters, do not let the frontstage connect directly to the
+  backstage service
+
+### Wording Blocks That Travel Well
+
+Useful phrases for this subtype:
+
+- `当前可演示主面`
+- `正式态服务入口`
+- `治理 / 审核 / 回执枢纽`
+- `显式存在，但视觉权重次于主面`
+- `不是前台直连，而是受控进入正式服务`
+
+Use them to encode narrative hierarchy, not as random slogans.
+
+### Refinement Order For This Subtype
+
+Do not fix every failure with one giant correction prompt.
+
+Narrow the rounds:
+
+1. semantic tier repair
+2. briefing posture repair
+3. icon-semantic repair
+
+Example focus per round:
+
+- semantic tier repair
+  - add the missing backstage formal service
+  - restore the hinge
+  - remove illegal direct arrows
+- briefing posture repair
+  - reduce title weight
+  - improve balance and whitespace
+  - keep the backstage service from looking squeezed or accidental
+- icon-semantic repair
+  - preserve layout
+  - replace misleading icons or visual metaphors only
+
+This keeps the model from re-breaking a settled layout while chasing a later,
+smaller defect.
+
 ### Diagram Posture: Dead Diagram vs Teaching Infographic
 
 Do not collapse every architecture prompt into the same corporate box diagram.

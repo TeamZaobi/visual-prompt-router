@@ -58,6 +58,13 @@ It solves five questions:
   prompts: [references/architecture-ab-test-loop.md](./references/architecture-ab-test-loop.md)
 - Need routing rules across prompt-only, built-in, CLI, and browser paths:
   [references/backend-routing.md](./references/backend-routing.md)
+- Need browser-adapter selection rules for `playwright`,
+  `chrome-devtools`, and `computer-use`:
+  [references/browser-adapter-best-practices.md](./references/browser-adapter-best-practices.md)
+- Need a machine-friendly browser adapter decision tree and JSON metadata:
+  [references/browser-adapter-decision-tree.md](./references/browser-adapter-decision-tree.md)
+- Need the rule for structured metadata versus final image prompt:
+  [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
@@ -122,6 +129,60 @@ It solves five questions:
     `simple icons` or `recognizable icons`. Name the actual metaphor for each
     target whenever possible, such as `laptop-plus-folder`, `database
     cylinder`, or `globe with API badges`.
+21. For leadership-briefing architecture explainers, do not treat every box as
+    equal. Explicitly encode the current visible primary surface, the
+    operational hinge, and the backstage formal service. `Explicit but
+    secondary` is not the same as hidden.
+22. For browser create-image routes, `image rendered in the page` is not the
+    same as `artifact captured locally`. Do not say download succeeded until a
+    concrete local file path has been verified.
+23. If a browser site exposes multiple download controls, record the exact one
+    that yields the intended asset. Do not confuse a page-level download action
+    with an image-local full-resolution download action.
+24. After triggering a browser download, do not thrash into screenshots,
+    alternate buttons, or path-hunting immediately. First allow for slow save
+    behavior and verify whether a new or overwritten file actually materialized
+    by timestamp, size, dimensions, or hash.
+25. For Gemini website workflows, assume only one full-size download is safe to
+    have in flight at a time unless the site behavior was explicitly verified
+    otherwise. Do not queue a second `Download Full size` click before the
+    first one has materialized locally or been declared blocked.
+26. If a website hides image-local controls until the pointer hovers over the
+    image region, treat that hover as part of the required workflow. Do not
+    conclude the control is absent until the reveal gesture has been tried on
+    the image itself.
+27. Choose browser adapters by session model and exposed capability surface, not
+    by adapter name alone. `playwright`, `chrome-devtools`, and
+    `computer-use` solve different problems.
+28. Do not assume Playwright can silently take over the user's currently open,
+    logged-in browser tab unless the host has an existing-tab bridge such as
+    the Playwright browser extension or an explicit CDP attach path. A managed
+    Playwright browser is the default mental model.
+29. Do not treat copying a live Chrome or Edge profile as the default way to
+    recover login state. When existing session state matters, prefer official
+    existing-session attach flows such as Chrome DevTools MCP `--autoConnect`,
+    `--browser-url`, or the Playwright MCP browser extension.
+30. When adapter choice is non-trivial, normalize the situation into structured
+    browser decision metadata first, then emit a structured decision record.
+    Do not rely on free-form prose alone for adapter selection.
+31. For browser download workflows, do not treat a raw click dispatch as an
+    effective download click. The click becomes effective only when the site
+    shows an active state such as spinner/loading behavior, or when equivalent
+    network/download evidence is captured.
+32. After an effective browser download click, allow for a materialization
+    delay window before retrying, rerouting, or downgrading to screenshot
+    fallback. Slow local save behavior is not the same as failure.
+33. For Gemini website image downloads, the safe default is:
+    `hover if needed -> reveal the image-local control -> click Download Full
+    size once -> confirm active state -> wait for local materialization ->
+    verify the file`. Do not insert extra clicks inside that window.
+34. Structured metadata or JSON can be the internal source of truth for facts,
+    layout, and forbidden relations, but do not assume raw JSON is a good
+    final prompt for Gemini website image generation.
+35. When the source is structured, compile it into compact natural-language
+    render instructions before sending it to the image model. Keep keys,
+    quotes, and schema words on the source side, not in the final render
+    prompt.
 
 ## Technical Infographic Minimum
 
@@ -139,6 +200,13 @@ encode these visual primitives before you consider it done:
 8. role-based color mapping across host, client, server, resource, and lower
    band
 9. a lighter secondary treatment for the lower band
+
+For leadership-briefing variants, also encode:
+
+1. which region is the current visible primary surface
+2. which node is the operational hinge
+3. which backstage formal service must be explicit but secondary
+4. which direct arrows are forbidden because the handoff is controlled
 
 Default concrete resource metaphors for protocol explainers:
 
@@ -239,6 +307,14 @@ For technical infographics, also force a concrete visual-system layer:
 8. role-based color mapping by section
 9. lighter secondary treatment for the bottom band
 
+For leadership-briefing architecture explainers, also force a semantic-tier
+layer:
+
+1. current visible primary surface
+2. operational hinge such as review, approval, receipt, or governance
+3. backstage formal service that is explicit but secondary
+4. boundary language that forbids direct frontstage access when relevant
+
 Detailed guidance and templates live in
 [references/prompt-assembly.md](./references/prompt-assembly.md).
 
@@ -265,6 +341,17 @@ Before non-native execution, do two things:
 1. run a route preflight that verifies the actual adapter or command surface
 2. create a small route card that captures prompt source, adapter, artifact
    directory, expected outputs, and current blocker state
+
+For browser create-image routes, the route card should also capture:
+
+1. the exact download control that is supposed to produce the final asset
+2. the expected download directory
+3. how download completion will be verified
+4. whether the site may reuse an old filename or delay write-out
+5. whether a full-size download is already in flight
+6. whether the control must be revealed by hovering over the image region first
+7. whether the session comes from a managed browser, a persistent profile, an
+   existing browser attach, or front-window app control
 
 For the host-native image route, the rule is simpler: if the native image
 surface is available in this turn and the user explicitly asked to make the

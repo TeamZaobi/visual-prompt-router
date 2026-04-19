@@ -118,6 +118,18 @@ Adapter preference:
 - use desktop app control only when the job truly depends on full app-level
   interaction or the lighter browser MCP path is unavailable
 
+Adapter choice rule:
+
+- choose by session model first, not by adapter label
+- if you need deterministic managed automation, prefer `playwright`
+- if you need existing live Chrome session reuse or manual-to-agent debugging
+  handoff, prefer `chrome-devtools`
+- use `computer-use` only when browser-native control is unavailable or too
+  thin for the needed interaction
+
+Do not assume the adapter namespace guarantees a rich surface. Preflight the
+actual exposed tool capabilities.
+
 Use when:
 
 - the user explicitly wants the website workflow
@@ -131,13 +143,87 @@ Action:
 - treat browser actions as the main flow, not as a fake CLI wrapper
 - include required download clicks as part of the real workflow
 - record the actual adapter used, the target browser or app, the intended
-  download directory, and the last completed step before handing control back
+  download directory, the exact download control, and the last completed step
+  before handing control back
+- treat `rendered in-browser preview` and `downloaded final artifact` as two
+  separate workflow steps
+- do not claim success until the file has actually materialized locally
+
+### Playwright vs Chrome DevTools
+
+Default interpretation:
+
+- `playwright`
+  - managed browser automation first
+- `chrome-devtools`
+  - existing Chrome attach and debugging first
+
+Playwright best practice:
+
+- use it for repeatable flows, stable locators, and controlled session models
+- prefer isolated context, storage state, or a persistent Playwright profile
+  over ad hoc login recovery
+- if the task truly needs an already open logged-in browser tab, prefer the
+  official Playwright browser extension or a deliberate CDP attach plan
+- do not assume a fresh Playwright session will inherit the user's manual
+  browser state
+
+Chrome DevTools best practice:
+
+- use it for active browser-session reuse, authenticated existing tabs, and
+  manual-to-agent debugging handoff
+- prefer `--autoConnect` when available for live session reuse
+- use `--browser-url` or `--ws-endpoint` when the MCP client must connect to a
+  running debuggable Chrome
+- do not default to profile copying as a login-state strategy
+- a reachable debug port is not enough by itself; it must point at the right
+  authenticated session
+- if the exposed DevTools surface is awkward for target switching but the page
+  websocket is reachable, direct CDP websocket scripting is an acceptable
+  implementation layer for that same attached session. Record that execution
+  detail explicitly instead of pretending the session model changed.
+
+Anti-pattern:
+
+- switching from Playwright to copied browser profiles to remote-debug-port
+  probing without first stating that the real requirement is existing-session
+  reuse
+
+Gemini website download rule:
+
+- if the goal is the high-resolution asset, use the image-local
+  `Download Full size` control, not a generic page-level download action
+- if the asset is still shown as a smaller image card, hover over the image
+  region first to reveal the image-local controls
+- do not treat `button not visible yet` in the small-card state as proof that
+  the full-size control is unavailable
+- if the image needs to be opened into a lightbox or focused card before that
+  control appears, treat that as part of the route
+- treat Gemini full-size downloads as single-flight by default: one in-flight
+  `Download Full size` at a time
+- treat a download click as effective only after the site enters an active
+  state such as spinner/loading behavior, or equivalent network/download
+  evidence proves the request started
+- after clicking the correct download control, wait for the browser save to
+  materialize before switching strategies
+- once the effective click is confirmed, allow a grace window for local file
+  materialization before re-clicking or rerouting
+- do not click `Download Full size` for a second image while the first download
+  is still pending local materialization
+- do not keep re-clicking just because no file appeared immediately; Gemini can
+  delay local file creation after the click
+- if Gemini reuses a filename or writes slowly, verify by precise timestamp,
+  file size, dimensions, or hash rather than assuming `no new filename` means
+  `no download`
+- do not downgrade to screenshot fallback until you have verified that the
+  correct download control was used and a reasonable wait produced no local file
 
 Preflight before promising execution:
 
 - verify browser automation or desktop-control access is available
 - verify the target browser is controllable in the current host session
 - verify approval or permission gating will not block app control
+- verify you know which site-specific control produces the intended asset
 
 If preflight fails:
 
@@ -147,12 +233,52 @@ If preflight fails:
 - fall back to `prompt-only`, built-in image generation, or Gemini CLI,
   depending on what the user asked for and what remains feasible
 
+If the failure is actually "existing session was required but the chosen
+adapter started clean":
+
+- say that explicitly
+- reroute to `chrome-devtools` existing-session attach or Playwright extension
+- do not describe it as a prompt failure
+
+If the failure is actually "debuggable Chrome exists, but not for the right
+logged-in Gemini session":
+
+- say that explicitly
+- prefer `computer-use` for the current front logged-in Chrome window
+- treat a dedicated logged-in debuggable Chrome session as the long-term
+  optimization path
+
 Browser-state rule:
 
 - do not assume the next turn can infer the same browser tab, download state,
   or logged-in session from prior chat alone
 - externalize the important state into a route card or run note before you move
   on
+
+Session-origin rule:
+
+- record whether the browser state came from:
+  - managed Playwright browser
+  - persistent Playwright profile
+  - Playwright extension attached to an existing tab
+  - Chrome DevTools auto-connect
+  - Chrome DevTools remote-debug URL
+  - front-window `computer-use`
+- do not let these silently blur together in the same run narrative
+
+Download-state rule:
+
+- record whether the correct download control has already been clicked
+- record when that click happened
+- record whether the click was only dispatched or was confirmed effective by
+  active-state or network evidence
+- record what local verification method will prove completion
+- record whether a Gemini full-size download is currently in flight
+- record whether the current state requires hover over the image region to
+  reveal the control
+- record the grace window before a re-click or reroute is allowed
+- if the browser is known to save slowly, prefer explicit waiting and later
+  verification over improvising a new capture path too early
 
 ## Serial-By-Default Rule
 
@@ -167,6 +293,8 @@ Reason:
 - lower session collision risk
 - easier per-image review
 - easier recovery when browser control is permission-gated
+- aligns with Gemini website behavior where only one full-size download may be
+  reliable at a time
 
 ## When To Change Route Instead Of Rewriting Prompt
 

@@ -88,6 +88,20 @@ Important split:
   infographic with icon metaphors, section rhythm, and warmer card language
   rather than a dead corporate diagram.
 
+Leadership-briefing split:
+
+- If the user says `汇报`, `给领导看`, `交付文档`, `30 秒讲清`, `示意图`,
+  `不要工程流程图`, or equivalent language, treat it as a leadership briefing
+  architecture explainer.
+- For this subtype, optimize for message hierarchy before exhaustive node
+  coverage.
+- Lock these semantic tiers explicitly:
+  - current visible primary surface
+  - operational hinge such as review, approval, receipt, or governance
+  - backstage formal service or formal destination
+- If one of those tiers remains implicit only, the prompt is still
+  underspecified even when the box count looks correct.
+
 ### 5. Illustration Plus Chibi Figurine Product Shot
 
 Use when the frame must show both the 2D character art and a stylized chibi
@@ -142,6 +156,8 @@ Typical signals:
 - "结构对了但图太死、不生动":
   the prompt is missing diagram posture, icon metaphors, and teaching-graphic
   visual primitives
+- "结构对了但主次不对", "后台正式入口没立住", or similar:
+  the semantic tiers or policy boundary are underspecified
 
 ### If the user says "重新设计"
 
@@ -159,6 +175,13 @@ For technical infographics, also re-open:
 5. section map
 6. column or row relationships
 7. label count and text budget
+
+For leadership-briefing architecture explainers, also re-open:
+
+8. which region is the current visible primary surface
+9. which node is the operational hinge
+10. which backstage service must be explicit but secondary
+11. which arrows or access paths must never appear as direct links
 
 ### If the user gives reference images
 
