@@ -67,6 +67,8 @@ It solves five questions:
   [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md)
 - Need the file-driven operating model and standard run-pack layout:
   [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md)
+- Need the case-first retrieval rule instead of blind zero-shot prompting:
+  [references/case-driven-prompting.md](./references/case-driven-prompting.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
@@ -192,6 +194,13 @@ It solves five questions:
     decisions and prompt snapshots as execution objects, review checklists as
     status projections, and only the approved promoted artifact as the display
     projection.
+38. When the user provides a prior approved conversation, prior prompt, prior
+    image family, or benchmark case, retrieve and cite those cases before
+    composing the new prompt. Do not default to zero-shot if relevant cases
+    already exist.
+39. For recurring technical infographic or leadership-briefing diagram work,
+    case-first prompting is the default. Zero-shot is the fallback only when no
+    usable case exists.
 
 ## Technical Infographic Minimum
 
@@ -263,6 +272,7 @@ Preferred layout:
 ./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
   00-visual-task.md
   01-structured-source.json
+  01b-case-references.md
   02-final-prompt.txt
   03-adapter-decision.json
   04-route-card.json
@@ -275,6 +285,8 @@ File roles:
 
 - `00-visual-task.md` and `01-structured-source.json`
   - truth source
+- `01b-case-references.md`
+  - case input and precedent notes
 - `02-final-prompt.txt`, `03-adapter-decision.json`, and `04-route-card.json`
   - execution objects
 - `05-acceptance.md` and `06-run-notes.md`
@@ -313,6 +325,28 @@ user says the image should lead.
 If you created a run pack, write the source facts and constraints into
 `00-visual-task.md` and `01-structured-source.json` before you write the final
 prompt.
+
+### 2.5 Retrieve Similar Cases
+
+Before writing a new prompt for recurring work, retrieve up to three similar
+approved cases.
+
+Priority order:
+
+1. approved project-local prompt and image pairs
+2. prior runs from the same image family
+3. benchmark prompts already stored in this skill
+4. user-provided prior conversations or approved examples
+
+For a file-driven run, write the chosen cases into `01b-case-references.md`:
+
+- case source
+- why it is relevant
+- what to keep
+- what to avoid copying blindly
+
+Do not paste whole old prompts into the new one. Extract reusable structure,
+not stale specifics.
 
 ### 3. Lock the Deliverable
 
@@ -366,6 +400,8 @@ layer:
 Detailed guidance and templates live in
 [references/prompt-assembly.md](./references/prompt-assembly.md) and
 [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md).
+Case retrieval guidance lives in
+[references/case-driven-prompting.md](./references/case-driven-prompting.md).
 
 ### 5. Pick the Route
 

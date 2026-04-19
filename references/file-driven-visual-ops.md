@@ -23,7 +23,8 @@ Default answer:
 
 1. `00-visual-task.md` and `01-structured-source.json` count as the current
    truth source
-2. compile `02-final-prompt.txt` from that source
+2. retrieve similar cases, then compile `02-final-prompt.txt` from source plus
+   precedent
 3. do not write directly into the final project deliverable path yet
 4. externalize route choice and browser state into `03-adapter-decision.json`
    and `04-route-card.json`
@@ -62,6 +63,7 @@ Use this layout for any visual run that may be resumed or reviewed:
 ./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
   00-visual-task.md
   01-structured-source.json
+  01b-case-references.md
   02-final-prompt.txt
   03-adapter-decision.json
   04-route-card.json
@@ -100,6 +102,13 @@ Do not write browser tactics here.
 
 ## Step 2. Compile The Final Prompt
 
+Before compilation, create:
+
+- `01b-case-references.md`
+
+Use it to record the closest approved precedents and the specific lessons to
+borrow.
+
 Create:
 
 - `02-final-prompt.txt`
@@ -109,7 +118,10 @@ This file is the actual render prompt.
 Rule:
 
 - structured source can mention semantic tiers and constraint categories
+- retrieved cases should provide reusable layout or route lessons
 - final prompt should read like image instructions
+
+Do not rely on zero-shot by default when a similar approved case exists.
 
 ## Step 3. Decide The Route
 

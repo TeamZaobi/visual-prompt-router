@@ -103,6 +103,7 @@ Preferred file-driven layout inside that directory:
 ./.codex/visual-runs/YYYYMMDD-HHMM-[slug]/
   00-visual-task.md
   01-structured-source.json
+  01b-case-references.md
   02-final-prompt.txt
   03-adapter-decision.json
   04-route-card.json
@@ -122,6 +123,7 @@ Keep there:
 If you are using the standard pack:
 
 - `00-visual-task.md` and `01-structured-source.json` are the truth source
+- `01b-case-references.md` records precedent retrieval
 - `02-final-prompt.txt`, `03-adapter-decision.json`, and `04-route-card.json`
   are execution objects
 - `05-acceptance.md` and `06-run-notes.md` are status projections

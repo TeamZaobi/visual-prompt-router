@@ -15,6 +15,8 @@ Template roles:
   - truth source in prose
 - `01-structured-source.json`
   - truth source in structured form
+- `01b-case-references.md`
+  - precedent retrieval and adaptation notes
 - `02-final-prompt.txt`
   - final render prompt only
 - `03-adapter-decision.json`
@@ -31,6 +33,7 @@ Template roles:
 Rule:
 
 - source files say what should be made
+- case file says what prior precedent is worth reusing
 - execution files say how this round is being run
 - review files say what happened
 - only approved promoted artifacts leave the run pack

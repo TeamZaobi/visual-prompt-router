@@ -34,6 +34,7 @@ keeping the route only in chat memory:
 
 - `00-visual-task.md`
 - `01-structured-source.json`
+- `01b-case-references.md`
 - `02-final-prompt.txt`
 - `03-adapter-decision.json`
 - `04-route-card.json`

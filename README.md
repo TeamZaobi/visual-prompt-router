@@ -29,6 +29,7 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/browser-adapter-decision-tree.md](./references/browser-adapter-decision-tree.md): JSON metadata and deterministic adapter choice
 - [references/structured-source-and-final-prompt.md](./references/structured-source-and-final-prompt.md): keep JSON or metadata on the source side, then compile into the final image prompt
 - [references/file-driven-visual-ops.md](./references/file-driven-visual-ops.md): file roles, run-pack layout, and the default stable operating path
+- [references/case-driven-prompting.md](./references/case-driven-prompting.md): retrieve similar approved cases before writing the new prompt
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs
@@ -51,6 +52,8 @@ This repo is designed for image-generation prompt work across tasks such as:
    final Gemini website prompt.
 9. If the job will be executed or revisited, use a file-driven run pack instead
    of relying on chat memory.
+10. If a similar approved case already exists, use case-first compilation
+    instead of hoping for a clean zero-shot hit.
 
 ## Technical Infographic Guidance
 
