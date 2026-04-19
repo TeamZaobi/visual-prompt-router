@@ -32,6 +32,7 @@ This repo is designed for image-generation prompt work across tasks such as:
 - [references/case-driven-prompting.md](./references/case-driven-prompting.md): retrieve similar approved cases before writing the new prompt
 - [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md): concrete benchmark images and assembled benchmark boards for each recurring deliverable family
 - [references/evaluation-and-reflection-loop.md](./references/evaluation-and-reflection-loop.md): per-round evaluation, diagnosis, and sedimentation rules for iterative image work
+- [references/shandong-replay-validation.md](./references/shandong-replay-validation.md): first offline replay showing which parts of the evaluation standard actually held up
 - [references/execution-preflight.md](./references/execution-preflight.md): route preflight before promising execution
 - [references/dispatch-contract.md](./references/dispatch-contract.md): the route-card contract and artifact fields
 - [references/state-capture-and-resume.md](./references/state-capture-and-resume.md): persistence rules for browser or CLI image runs

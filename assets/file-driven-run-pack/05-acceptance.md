@@ -1,28 +1,19 @@
 # Acceptance
 
-## Round
+## Fixed Reference
 
-- 
-
-## Compared Against
-
+- Round:
+- Deliverable family:
 - Benchmark asset:
+- Candidate artifact:
 - Previous artifact:
 
-## Hard Gates
+## Four Hard Gates
 
-- Source accuracy:
-- Medium fit:
-- Semantic hierarchy or policy boundary:
-- Text fidelity:
-
-## Soft Scores (1-5)
-
-- Layout integrity:
-- Role clarity and node anatomy:
-- Pedagogical warmth or visual liveliness:
-- Material or finish quality:
-- Downstream usefulness:
+- Source accuracy: pass / fail
+- Medium fit: pass / fail
+- Semantic hierarchy: pass / fail / n-a
+- Text fidelity: pass / fail / n-a
 
 ## What Passed
 
@@ -52,6 +43,8 @@
 - reroute
 - promote artifact
 - stop
+
+- Single next change:
 
 ## Approved Artifact
 

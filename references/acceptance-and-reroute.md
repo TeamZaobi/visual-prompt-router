@@ -12,6 +12,22 @@ Short rule:
 
 Do not collapse them into one fuzzy review note.
 
+## Minimal Standard
+
+The replay-validated core is only this:
+
+1. fix one benchmark first
+2. check four hard gates:
+   - source accuracy
+   - medium fit
+   - semantic hierarchy when relevant
+   - text fidelity when relevant
+3. record delta:
+   - better / same / worse
+4. choose one next change
+
+Anything else is optional support, not part of the mandatory standard.
+
 ## Acceptance Checklist
 
 Check hard gates first, then score the softer dimensions.

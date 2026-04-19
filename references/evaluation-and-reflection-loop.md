@@ -8,6 +8,18 @@ The goal is simple:
 - stop mixing evaluation, diagnosis, and ideation into one vague step
 - make each new round accountable to one explicit change hypothesis
 
+## Minimal Core
+
+The stable core is intentionally small:
+
+1. fixed benchmark
+2. four hard gates
+3. round delta
+4. single next change
+
+If a workflow cannot execute those four lines cleanly, do not add more scoring
+layers. Reduce complexity first.
+
 ## Split The Loop In Two
 
 Do not merge these:

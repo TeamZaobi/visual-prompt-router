@@ -1,9 +1,5 @@
 # Run Notes
 
-## Route Observations
-
-- 
-
 ## Keep
 
 - 
@@ -13,6 +9,10 @@
 - Dominant failure layer:
 - Why this happened:
 - Single next-change hypothesis:
+
+## Route Observations
+
+- 
 
 ## Sedimentation Candidate
 

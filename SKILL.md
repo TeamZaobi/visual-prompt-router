@@ -74,6 +74,9 @@ It solves five questions:
   [references/gold-standard-image-registry.md](./references/gold-standard-image-registry.md)
 - Need a stable per-round evaluation and reflection loop for iterative work:
   [references/evaluation-and-reflection-loop.md](./references/evaluation-and-reflection-loop.md)
+- Need to see the first offline replay that tested whether the standard actually
+  holds:
+  [references/shandong-replay-validation.md](./references/shandong-replay-validation.md)
 - Need concrete preflight checks before promising an execution path:
   [references/execution-preflight.md](./references/execution-preflight.md)
 - Need the route card and artifact fields that make execution resumable:
