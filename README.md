@@ -53,7 +53,9 @@ This repo is designed for image-generation prompt work across tasks such as:
 9. If the job will be executed or revisited, use a file-driven run pack instead
    of relying on chat memory.
 10. If a similar approved case already exists, use case-first compilation
-    instead of hoping for a clean zero-shot hit.
+   instead of hoping for a clean zero-shot hit.
+11. In visual work, the strongest case is the approved image itself. Prompt-only
+   precedent is secondary evidence, not the primary example.
 
 ## Technical Infographic Guidance
 

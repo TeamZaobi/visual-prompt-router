@@ -201,6 +201,9 @@ It solves five questions:
 39. For recurring technical infographic or leadership-briefing diagram work,
     case-first prompting is the default. Zero-shot is the fallback only when no
     usable case exists.
+40. For visual tasks, image examples outrank prompt-only examples. If both are
+    available, learn the visual target from the approved image first, then use
+    the old prompt only as supporting evidence for how that result was reached.
 
 ## Technical Infographic Minimum
 
@@ -333,20 +336,23 @@ approved cases.
 
 Priority order:
 
-1. approved project-local prompt and image pairs
-2. prior runs from the same image family
-3. benchmark prompts already stored in this skill
-4. user-provided prior conversations or approved examples
+1. approved project-local images in the same family
+2. prior runs from the same image family with visible outputs
+3. benchmark image examples already stored in this skill
+4. approved prompt and image pairs
+5. user-provided prior conversations or approved examples
 
 For a file-driven run, write the chosen cases into `01b-case-references.md`:
 
 - case source
+- image reference
 - why it is relevant
+- visual lessons to keep
 - what to keep
 - what to avoid copying blindly
 
-Do not paste whole old prompts into the new one. Extract reusable structure,
-not stale specifics.
+Do not paste whole old prompts into the new one. Extract reusable visual
+structure from the image first, then keep only the useful textual support.
 
 ### 3. Lock the Deliverable
 

@@ -109,6 +109,8 @@ Before compilation, create:
 Use it to record the closest approved precedents and the specific lessons to
 borrow.
 
+Prefer cases that include approved images, not prompt text alone.
+
 Create:
 
 - `02-final-prompt.txt`
@@ -119,6 +121,8 @@ Rule:
 
 - structured source can mention semantic tiers and constraint categories
 - retrieved cases should provide reusable layout or route lessons
+- approved image examples should anchor the target posture, density, and
+  hierarchy
 - final prompt should read like image instructions
 
 Do not rely on zero-shot by default when a similar approved case exists.

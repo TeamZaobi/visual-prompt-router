@@ -34,6 +34,7 @@ Rule:
 
 - source files say what should be made
 - case file says what prior precedent is worth reusing
+- approved image examples are the strongest precedent in visual work
 - execution files say how this round is being run
 - review files say what happened
 - only approved promoted artifacts leave the run pack
