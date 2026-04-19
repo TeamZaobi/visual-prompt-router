@@ -65,6 +65,25 @@ Weak case sources:
 - conversations that describe a target look but do not show what "good" looked
   like
 
+## Weak Visual Precedent, Strong Clue Source
+
+Some materials are not strong visual precedent, but they still carry useful
+clues.
+
+Examples:
+
+- a shared conversation that explains how this image family is usually made
+- a thread that reveals the route, workflow, or benchmark sources people use
+- a post that names the visual posture even when it does not include the final
+  approved image itself
+
+Treat these as:
+
+- weak for final look imitation
+- strong for method clues, route clues, and retrieval clues
+
+Do not discard them. Record them separately and keep their role explicit.
+
 ## Retrieval Order
 
 For a new run, search in this order:
@@ -118,12 +137,13 @@ For a file-driven run, record retrieved cases in:
 Each entry should state:
 
 1. case source
-2. image reference or path
-3. similarity
-4. visual lessons to keep
-5. prompt or route lessons to keep
-6. what not to inherit blindly
-7. whether the case teaches image posture, prompt structure, route behavior, or
+2. case type such as `image precedent`, `prompt precedent`, or `clue source`
+3. image reference or path
+4. similarity
+5. visual lessons to keep
+6. prompt or route lessons to keep
+7. what not to inherit blindly
+8. whether the case teaches image posture, prompt structure, route behavior, or
    several of them
 
 ## Compilation Rule

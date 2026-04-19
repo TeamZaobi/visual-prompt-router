@@ -3,6 +3,7 @@
 ## Case 1
 
 - Source:
+- Case type:
 - Image:
 - Similarity:
 - Visual lessons to keep:
@@ -14,6 +15,7 @@
 ## Case 2
 
 - Source:
+- Case type:
 - Image:
 - Similarity:
 - Visual lessons to keep:
@@ -25,6 +27,7 @@
 ## Case 3
 
 - Source:
+- Case type:
 - Image:
 - Similarity:
 - Visual lessons to keep:
