@@ -13,11 +13,13 @@ The goal is simple:
 The stable core is intentionally small:
 
 1. fixed benchmark
-2. four hard gates
-3. round delta
-4. single next change
+2. small batch from one fixed prompt and route setup
+3. four hard gates
+4. `top hit` and `hit rate`
+5. round delta
+6. single next change
 
-If a workflow cannot execute those four lines cleanly, do not add more scoring
+If a workflow cannot execute those lines cleanly, do not add more scoring
 layers. Reduce complexity first.
 
 ## Split The Loop In Two
@@ -43,7 +45,7 @@ Do not turn reflection into another aesthetic rewrite.
 
 Before evaluating a round, lock these references:
 
-1. current artifact under review
+1. current batch under review
 2. previous artifact if this is not round one
 3. selected benchmark asset from
    `references/gold-standard-image-registry.md` when one exists
@@ -62,6 +64,8 @@ Write down:
 - deliverable family
 - selected benchmark asset
 - what the benchmark is teaching in this round
+- batch size
+- which artifact is the provisional `top hit`
 
 If the chosen benchmark is clearly wrong, fix the benchmark selection first.
 Do not keep polishing against the wrong target.
@@ -94,6 +98,17 @@ If a hard gate fails:
 - do not spend the next round on polish adjectives
 - fix the failing layer first
 
+Batch rule:
+
+- check hard gates on the whole batch, not just the prettiest image
+- record which artifact is the `top hit`
+- record `hit rate` as `passes / total`
+
+Interpretation:
+
+- `top hit` tells you the ceiling
+- `hit rate` tells you whether the prompt or route is stable
+
 ### Step 3. Score Soft Dimensions
 
 Use `1-5` scoring for soft dimensions:
@@ -119,17 +134,20 @@ Interpretation:
 
 Do not inflate scores to avoid rerouting.
 
-### Step 4. Record Delta, Not Just Snapshot
+### Step 4. Record Batch Strength, Then Delta
 
 Every round must answer:
 
-1. better than previous round, same, or worse
-2. closer to the benchmark, same distance, or farther away
-3. did the round improve the intended thing, or did it trade one failure for
+1. did the batch produce a `top hit`
+2. what is the `hit rate`
+3. better than previous round, same, or worse
+4. closer to the benchmark, same distance, or farther away
+5. did the round improve the intended thing, or did it trade one failure for
    another
 
 Useful delta language:
 
+- `top hit improved, hit rate still weak`
 - `better on hierarchy, worse on text fidelity`
 - `same on family fit, better on finish`
 - `closer to benchmark posture, still weak on node anatomy`
@@ -149,6 +167,15 @@ Promotion default:
 - all relevant hard gates pass
 - soft-dimension average is at least `4`
 - no critical publication blocker remains
+
+Promotion nuance:
+
+- `promote artifact`
+  - allowed when the batch contains one image that clearly passes the hard
+    gates and is good enough for downstream use
+- prompt or route stability
+  - not allowed from a single-image batch
+  - requires a recorded `hit rate` from a small batch
 
 If the image is only a strong exploratory anchor, say that explicitly instead of
 pretending it is publish-ready.
@@ -265,6 +292,9 @@ Use when:
 - it is strong enough for its intended downstream role
 - the remaining imperfections are acceptable for that role
 
+Do not confuse this with prompt validation.
+A promoted artifact can still come from a weak-hit-rate batch.
+
 ### Stop
 
 Use when:
@@ -287,12 +317,14 @@ Avoid these during iteration:
 
 ## Minimal Output Standard
 
-After each round, you should be able to answer these five lines cleanly:
+After each round, you should be able to answer these seven lines cleanly:
 
 1. what benchmark was used
-2. which hard gate failed or passed
-3. whether this round is better, same, or worse
-4. what the dominant failure layer is
-5. what single thing changes next
+2. what batch was evaluated
+3. which artifact was the `top hit`
+4. what the `hit rate` was
+5. which hard gate failed or passed
+6. whether this round is better, same, or worse
+7. what single thing changes next
 
-If you cannot answer those five lines, the iteration loop is not stable yet.
+If you cannot answer those lines, the iteration loop is not stable yet.

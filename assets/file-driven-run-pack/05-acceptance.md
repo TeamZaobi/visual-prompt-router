@@ -5,8 +5,16 @@
 - Round:
 - Deliverable family:
 - Benchmark asset:
-- Candidate artifact:
+- Batch id:
+- Batch size:
+- Top-hit artifact:
 - Previous artifact:
+
+## Batch Stability
+
+- Evaluation target: artifact / prompt+route
+- Top hit: pass / fail
+- Hit rate: passes / total
 
 ## Four Hard Gates
 

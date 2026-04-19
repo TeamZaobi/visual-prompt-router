@@ -11,6 +11,9 @@ Test whether the evaluation standard can do three things consistently:
 2. attribute the dominant failure to the right layer
 3. produce one stable next action instead of vague aesthetic advice
 
+This replay was useful for structural judgment, but it did not test stochastic
+generation variance across repeated samples of the same prompt.
+
 ## Scope
 
 - Family under test:
@@ -26,17 +29,18 @@ Test whether the evaluation standard can do three things consistently:
 
 ## Minimal Standard Under Test
 
-Only these four checks were treated as mandatory:
+Only these checks were treated as mandatory:
 
 1. fixed benchmark
-2. four hard gates:
+2. replay set as the evaluation batch available for this validation
+3. four hard gates:
    - source accuracy
    - medium fit
    - semantic hierarchy
    - text fidelity
-3. round delta:
+4. round delta:
    - better / same / worse
-4. single next change
+5. single next change
 
 Anything beyond that was treated as optional commentary, not part of the core
 standard.
@@ -127,9 +131,10 @@ standard.
 These parts were stable in replay:
 
 1. fixed benchmark first
-2. four hard gates first
-3. better / same / worse delta
-4. one next change only
+2. evaluate against a visible set, not pure one-off intuition
+3. four hard gates first
+4. better / same / worse delta
+5. one next change only
 
 ## What Did Not Need To Be Mandatory
 
@@ -149,9 +154,16 @@ It is validated because, on this replay:
 3. it stayed stable across `P2-P4` without drifting into unrelated aesthetic
    talk
 
+But this replay only validated the structural review core.
+It did not validate prompt stability under stochastic generation.
+Therefore future live runs should record a small batch, plus `top hit` and
+`hit rate`, before claiming a prompt or route is stable.
+
 Therefore the stable core should remain:
 
 1. fixed benchmark
-2. four hard gates
-3. round delta
-4. single next change
+2. small batch
+3. four hard gates
+4. `top hit` and `hit rate`
+5. round delta
+6. single next change

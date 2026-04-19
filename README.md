@@ -65,6 +65,9 @@ This repo is designed for image-generation prompt work across tasks such as:
    considered complete.
 13. In iterative runs, evaluation and reflection must stay separate: round
    verdict first, failure attribution and next-change hypothesis second.
+14. Stochastic image work must be judged on a small batch, not a single lucky
+    image. One strong image can promote an artifact, but not the prompt or
+    route behind it.
 
 ## Technical Infographic Guidance
 

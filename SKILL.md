@@ -497,9 +497,12 @@ Check the result against the acceptance dimensions, especially:
 For iterative runs, also lock:
 
 1. which benchmark asset this round is being judged against
-2. whether the round is better, same, or worse than the previous round
-3. which hard gate failed first
-4. which single primary variable should change next
+2. which batch is being judged, not just one attractive image
+3. which artifact is the `top hit`
+4. what the `hit rate` is
+5. whether the round is better, same, or worse than the previous round
+6. which hard gate failed first
+7. which single primary variable should change next
 
 If the image is wrong, decide whether the fault is:
 
@@ -513,6 +516,10 @@ If the image is wrong, decide whether the fault is:
 For file-driven runs, record the review result in `05-acceptance.md` before you
 change route or rewrite the prompt again, then write the failure attribution and
 single next-change hypothesis into `06-run-notes.md`.
+
+Do not use one lucky image to claim the prompt is stable.
+One image may be enough to keep or promote an artifact, but prompt and route
+judgment require a small batch.
 
 ### 8. Close Cleanly
 

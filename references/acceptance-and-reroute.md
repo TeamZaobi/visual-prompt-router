@@ -14,19 +14,46 @@ Do not collapse them into one fuzzy review note.
 
 ## Minimal Standard
 
-The replay-validated core is only this:
+The replay-validated core stays small, but the evaluation unit is a small batch,
+not one lucky image:
 
 1. fix one benchmark first
-2. check four hard gates:
+2. evaluate one small batch from the same prompt and route setup
+3. check four hard gates:
    - source accuracy
    - medium fit
    - semantic hierarchy when relevant
    - text fidelity when relevant
-3. record delta:
+4. record:
+   - `top hit`
+   - `hit rate`
    - better / same / worse
-4. choose one next change
+5. choose one next change
 
 Anything else is optional support, not part of the mandatory standard.
+
+### Minimal Batch Rule
+
+- If one execution returns multiple candidates, review that returned set as one
+  batch.
+- If one execution returns only one candidate, do not use that single image to
+  judge prompt stability. Accumulate a small batch first.
+- Default minimum for prompt or route evaluation:
+  - `3` candidates if the family is image-led and text-light
+  - `4-6` candidates if the family is text-heavy or diagram-heavy
+
+Definitions:
+
+- `top hit`
+  - whether the strongest image in the batch passes all relevant hard gates
+- `hit rate`
+  - how many images in the batch pass all relevant hard gates, written as
+    `passes / total`
+
+Rule:
+
+- one strong image can promote an `artifact`
+- one strong image cannot by itself promote a `prompt` or `route`
 
 ## Acceptance Checklist
 
@@ -54,6 +81,9 @@ Promotion default:
 - all relevant hard gates pass
 - the image is strong enough for its downstream role
 - remaining defects are non-critical
+
+For prompt or route promotion, also require that the batch is not a pure
+one-off hit. Record `top hit` and `hit rate` explicitly.
 
 ## Typical Failure Modes
 
