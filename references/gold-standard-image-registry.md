@@ -115,23 +115,21 @@ The rule here is stricter:
 ### 6. Illustration Plus Chibi Figurine Product Shot
 
 - Benchmark asset:
-  [illustration-plus-chibi-figurine-product-shot--assembled-board.jpg](../assets/gold-standard-benchmarks/images/illustration-plus-chibi-figurine-product-shot--assembled-board.jpg)
-- Benchmark class: `assembled_benchmark_board`
+  [illustration-plus-chibi-figurine-product-shot--bella-blind-box.jpg](../assets/gold-standard-benchmarks/images/illustration-plus-chibi-figurine-product-shot--bella-blind-box.jpg)
+- Benchmark class: `direct_public_benchmark`
 - Deliverable family: `Illustration Plus Chibi Figurine Product Shot`
 - Source pages:
-  `https://www.behance.net/gallery/64481935/ASAP-Rocky-x-MINDstyle`
-  `https://www.behance.net/gallery/222761503/wwiinngg-x-Jinart-Chibi-Figure-`
+  `https://www.behance.net/gallery/233596275/Bella-Blind-Box-Toy-Packaging-Design`
 - Why it fits:
-  no single public image was exact enough, so this board combines the two
-  strongest clues:
-  `A$AP Rocky x MINDstyle` supplies the box-plus-figure same-frame product-shot
-  anatomy; `wwiinngg x Jinart` supplies the chibi ratio and collectible-poster
-  language
+  this single public image already captures the core family anatomy:
+  matching 2D character art behind the figure, same-design-language styling,
+  collectible product-shot posture, and clear chibi proportion
 - Teaches:
-  same-frame packaging plus figure composition, design consistency between box
-  art and object, chibi proportion cues
+  same-frame illustration plus figurine composition, design consistency between
+  printed art and object, commercial collectible posture, chibi proportion cues
 - Do not inherit blindly:
-  celebrity IP, the scooter prop, or the animal-collection styling from Jinart
+  the specific school-uniform styling, pink-beige palette, or blind-box brand
+  copy
 
 ### 7. Illustration Plus Realistic Figurine Development Shot
 
@@ -147,6 +145,11 @@ The rule here is stricter:
   development chain explicitly:
   concept sketches, digital sculpt stage, packaging plus illustration, and
   physical collectible context
+- Search note:
+  this board stays in place after checking newer single-image candidates such as
+  `JIBMUSIL Mascot Figure`, `TUD Toy | CGI Unboxing`, and ArtStation collectible
+  case pages; each candidate was missing at least one critical link in the
+  chain: concept, sculpt or print stage, or final collectible context
 - Teaches:
   concept-to-sculpt-to-object chain, collectible-development posture, product
   context without collapsing into a plain ad shot
