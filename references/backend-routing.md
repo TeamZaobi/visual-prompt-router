@@ -55,6 +55,11 @@ Special note for technical infographics:
   comparison
 - do not assume it is the best final route when exact labels matter
 
+Special note for English-first tasks:
+
+- when the task is English-first and does not depend on Gemini-specific or
+  browser-only behavior, this is the preferred fast path
+
 ## Route 3: Gemini CLI Or Nano Banana
 
 Use when:
@@ -95,6 +100,18 @@ Route choice inside the Gemini family:
   is required or browser-only Gemini behavior matters
 - prefer `chrome-devtools` when the host exposes it and the Gemini website flow
   is the intended route
+
+Upstream constraint rule:
+
+- if another layer has already fixed the route for the turn, treat that as the
+  active routing constraint here
+- if an upstream layer has already selected Route 2 for an English-first fast
+  draft, keep that route unless Gemini-specific or website-only behavior is
+  actually required
+- do not downgrade to the host built-in image tool just because native
+  execution is faster, simpler, or locally available
+- if Gemini CLI or Gemini website execution is blocked and you must downgrade,
+  say exactly what is blocked and name the fallback route explicitly
 
 Important limit:
 

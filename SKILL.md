@@ -113,11 +113,16 @@ It solves five questions:
     endlessly rewriting the prompt.
 12. For Chinese-first image tasks, default to a Gemini-family route instead of
     the host built-in image tool unless the user explicitly wants a rough draft
-    or explicitly requests another path.
-13. Once the selected route is the host's native image tool and the user has
+    or explicitly requests another path. If another layer has already fixed the
+    route for the turn, do not silently override that decision here. For
+    English-first image tasks, the host built-in image tool can be the default
+    fast path unless the user asks for Gemini, the website workflow, or another
+    backend-specific behavior.
+13. Once the selected route is the host's native image tool, and no stronger
+    upstream routing constraint is in force, execute directly when the user has
     explicitly asked to make the image such as `做图`, `出图`, `生成图片`,
-    `generate image`, or `render`, execute directly instead of expanding route
-    analysis first.
+    `generate image`, or `render`. Do not use native direct execution as a
+    shortcut around route selection.
 14. Route, adapter, and tool-call discussion are primarily for non-native
     execution paths such as `Gemini CLI`, `Nano Banana`, `chrome-devtools`,
     `playwright`, or browser create-image flows.
@@ -432,8 +437,13 @@ Case retrieval guidance lives in
 - If the user wants only wording, stop at prompt delivery
 - If the task is Chinese-first, prefer a Gemini-family route before the host
   built-in image path unless the user explicitly asks otherwise
-- If the host image tool is enough and the chosen route is native, execute
-  directly once the user has clearly asked to make the image
+- If the task is English-first and no Gemini-specific or website-only behavior
+  is needed, prefer the host built-in image path for fast iteration
+- If another layer has already fixed the route for the turn, honor that route
+  instead of silently reopening route selection here
+- If the host image tool is enough, the chosen route is native, and no
+  stronger routing constraint is in force, execute directly once the user has
+  clearly asked to make the image
 - If the task depends on Gemini CLI, Nano Banana, or Gemini website strengths,
   use that route
 - If the task depends on browser-only create-image flow or high-res downloads,
