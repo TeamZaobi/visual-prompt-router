@@ -28,6 +28,7 @@ Use when:
 - the user does not require Gemini-specific behavior
 - fast iteration matters more than platform-specific workflow
 - the chosen route is already the host-native image path
+- Hermes `image_generate` is configured for the desired provider, including `image_gen.provider=openai-codex` with an OpenAI Codex image model
 
 Action:
 
@@ -39,6 +40,7 @@ Action:
 Native-route rule:
 
 - do not expand tool-call discussion first once the route is already native
+- if Hermes `image_generate` has been configured to use `openai-codex`, call `image_generate` directly; do not detour through Codex CLI imagegen or spend the turn probing Codex CLI image capabilities
 - only reopen route analysis if the native path is unavailable in this turn or
   if one native round clearly shows a backend mismatch
 

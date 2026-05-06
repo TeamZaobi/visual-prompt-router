@@ -113,12 +113,13 @@ It solves five questions:
     endlessly rewriting the prompt.
 12. For Chinese-first image tasks, default to a Gemini-family route instead of
     the host built-in image tool unless the user explicitly wants a rough draft
-    or explicitly requests another path. If another layer has already fixed the
-    route for the turn, do not silently override that decision here. For
+12. For Chinese-first image tasks, default to a Gemini-family route instead of the host built-in image tool unless the user explicitly wants a rough draft
+    or explicitly requests another path. If another layer has already fixed the route for the turn, do not silently override that decision here. For
     English-first image tasks, the host built-in image tool can be the default
     fast path unless the user asks for Gemini, the website workflow, or another
     backend-specific behavior.
-13. Once the selected route is the host's native image tool, and no stronger
+13. If the user has configured Hermes `image_gen.provider=openai-codex`, or explicitly says to use `image_generate` directly, treat `image_generate` as the fixed route. Do not spawn Codex CLI just because the user says "Codex imagegen" or because the provider name contains `codex`; avoid CLI capability-probing loops. See [references/openai-codex-imagegen-routing.md](./references/openai-codex-imagegen-routing.md).
+14. Once the selected route is the host's native image tool, and no stronger
     upstream routing constraint is in force, execute directly when the user has
     explicitly asked to make the image such as `做图`, `出图`, `生成图片`,
     `generate image`, or `render`. Do not use native direct execution as a
