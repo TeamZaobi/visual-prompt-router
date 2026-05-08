@@ -181,6 +181,19 @@ Do not write unreviewed images directly into:
 - the presentation directory
 - the document-facing export path
 
+For Gemini website browser runs, prefer a repeatable artifact bundle per image:
+
+- `[label].prompt.txt`
+- `[label].before-send.png`
+- `[label].after-render.png`
+- `[label].after-download.png`
+- `[label].result.json`
+- `[label].downloaded.[ext]`
+
+If the browser initially saves into a shared download directory, copy or rename
+the verified file into `artifacts/` as the persisted artifact before treating
+the round as resumable.
+
 ## Step 6. Review Before Reroute
 
 Write review results to:
@@ -212,6 +225,8 @@ Use it for:
 - observed site quirks
 - overwritten filenames
 - download timing behavior
+- whether the stable policy stayed
+  `no_extra_clicks_before_direct_download`
 - why a route changed
 - dominant failure layer
 - what to keep from the current round

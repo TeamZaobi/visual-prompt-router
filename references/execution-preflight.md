@@ -60,7 +60,7 @@ image call that is already selected.
 
 If any of those fail, change route.
 
-## Gemini CLI Route
+## Optional Gemini CLI Route
 
 Minimum checks:
 
@@ -71,8 +71,9 @@ Minimum checks:
 
 Default preference:
 
-- prefer this route family for Chinese-first image tasks when local Gemini
-  execution is actually verified in the current host
+- do not prefer this route just because the task is Chinese-first; use it only
+  when explicitly requested, already selected upstream, or needed after a native
+  route mismatch has been stated
 
 Important distinction:
 
@@ -154,8 +155,9 @@ Do not collapse these into one claim:
 - the exact full-resolution control has been clicked
 - the local file has finished materializing
 
-For Gemini website workflows, `Download Full size` on the image card or
-lightbox is not the same thing as a generic page-level download gesture.
+For explicitly selected Gemini website workflows, `Download Full size` on the
+image card or lightbox is not the same thing as a generic page-level download
+gesture.
 
 Also remember:
 

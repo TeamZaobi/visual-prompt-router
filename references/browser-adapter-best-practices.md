@@ -151,11 +151,48 @@ For Gemini website image downloads:
   generic page-level download button
 - in the small-card state, hover over the image region first to reveal the
   control
+- after prompt submission, the tested safe default is
+  `post_submit_policy = no_extra_clicks_before_direct_download`
+- under that policy, do not spend the render window on extra clicks, screenshots,
+  or alternate buttons before the direct image-local download step is available
 - once the click is confirmed effective, wait through a defined grace window
   for local materialization before re-clicking
 - default to single-flight behavior: do not start another full-size download
   until the current one materializes, is declared blocked, or is explicitly
   abandoned
+
+## Gemini Existing-Session Stable Chain
+
+When Gemini website generation is being run against an already authenticated
+Chrome session and the route has been proven to work, preserve the concrete
+chain instead of flattening it into vague prose.
+
+Useful stable labels and fields:
+
+- route variant:
+  `gemini-web-chrome-dev`
+- post-submit policy:
+  `no_extra_clicks_before_direct_download`
+- result record should capture:
+  - `page_url_before_submit`
+  - `page_title_before_submit`
+  - `create_image_clicked`
+  - `before_send_screenshot`
+  - `submitted_at`
+  - `page_url_after_submit`
+  - `render_started`
+  - `render_started_at`
+  - `render_completed_at`
+  - `after_render_screenshot`
+  - `download_clicked_at`
+  - `downloaded_file`
+  - `persisted_artifact`
+  - `after_download_screenshot`
+
+Practical rule:
+
+If one sibling render in a batch has already validated this chain, keep the
+rest of the batch on the same chain unless a concrete blocker forces reroute.
 
 ## Host-Surface Rule
 

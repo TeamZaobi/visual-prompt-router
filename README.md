@@ -50,22 +50,24 @@ This repo is designed for image-generation prompt work across tasks such as:
 4. Source facts before generated artifacts.
 5. Route changes matter as much as prompt changes.
 6. Execution state has to be externalized if the route spans turns.
-7. Chinese-first image tasks should default to a Gemini-family route, not the
-   built-in image path.
-8. Structured metadata is a good source format, but raw JSON is usually a bad
-   final Gemini website prompt.
-9. If the job will be executed or revisited, use a file-driven run pack instead
+7. Image execution should default to the host built-in image path, including
+   Chinese-first, structure-heavy, text-heavy, and layout-sensitive tasks.
+8. Gemini-family, CLI, or browser website routes are opt-in or explicit
+   reroutes after a stated native-route mismatch.
+9. Structured metadata is a good source format, but raw JSON is usually a bad
+   final image prompt.
+10. If the job will be executed or revisited, use a file-driven run pack instead
    of relying on chat memory.
-10. If a similar approved case already exists, use case-first compilation
+11. If a similar approved case already exists, use case-first compilation
    instead of hoping for a clean zero-shot hit.
-11. In visual work, the strongest case is the approved image itself. Prompt-only
+12. In visual work, the strongest case is the approved image itself. Prompt-only
    precedent is secondary evidence, not the primary example.
-12. Each recurring deliverable family should resolve to one concrete benchmark
+13. Each recurring deliverable family should resolve to one concrete benchmark
    image or one concrete assembled benchmark board before case-first work is
    considered complete.
-13. In iterative runs, evaluation and reflection must stay separate: round
+14. In iterative runs, evaluation and reflection must stay separate: round
    verdict first, failure attribution and next-change hypothesis second.
-14. Stochastic image work must be judged on a small batch, not a single lucky
+15. Stochastic image work must be judged on a small batch, not a single lucky
     image. One strong image can promote an artifact, but not the prompt or
     route behind it.
 

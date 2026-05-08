@@ -1,6 +1,7 @@
 {
   "deliverable": "",
   "route": "",
+  "route_variant": "",
   "adapter": "",
   "execution_owner": "",
   "prompt_source": "",
@@ -28,5 +29,10 @@
   "download_effective_click_status": "",
   "download_effective_click_evidence": "",
   "download_materialization_grace_window_seconds": 20,
-  "download_reclick_allowed_at": ""
+  "download_reclick_allowed_at": "",
+  "post_submit_policy": "",
+  "persisted_artifact": "",
+  "result_record_path": "",
+  "batch_id": "",
+  "batch_route_locked": false
 }

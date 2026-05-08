@@ -24,8 +24,9 @@ Use when:
 
 - the host already has a stable image tool
 - the task is straightforward
-- the task is not Chinese-first, or the user explicitly accepts a rough draft
-- the user does not require Gemini-specific behavior
+- the task is Chinese-first, structure-heavy, text-heavy, or layout-sensitive,
+  unless a non-native route has been explicitly selected
+- the user does not require backend-specific behavior outside the host tool
 - fast iteration matters more than platform-specific workflow
 - the chosen route is already the host-native image path
 - Hermes `image_generate` is configured for the desired provider, including `image_gen.provider=openai-codex` with an OpenAI Codex image model
@@ -46,10 +47,10 @@ Native-route rule:
 
 Special note for Chinese-first tasks:
 
-- do not make this the default route when Chinese prompt nuance, Chinese copy,
-  or Chinese label quality matters
-- use it only for rough exploration when the user explicitly prefers speed over
-  Chinese-language quality
+- this is still the default route; do not switch away solely because Chinese
+  prompt nuance, Chinese copy, or Chinese label quality matters
+- if the native result fails because of Chinese text, label fidelity, or layout
+  constraints, state that failure and then consider a non-native route
 
 Special note for technical infographics:
 
@@ -59,7 +60,7 @@ Special note for technical infographics:
 
 Special note for English-first tasks:
 
-- when the task is English-first and does not depend on Gemini-specific or
+- when the task is English-first and does not depend on backend-specific or
   browser-only behavior, this is the preferred fast path
 
 ## Route 3: Gemini CLI Or Nano Banana
@@ -67,9 +68,8 @@ Special note for English-first tasks:
 Use when:
 
 - the user explicitly wants Gemini CLI or Nano Banana
-- the task is Chinese-first and image quality depends on Chinese-language
-  understanding
-- the task depends on Gemini-side image behavior
+- the task depends on Gemini-side image behavior and that dependency has been
+  stated before execution
 - reference-image control or repeatable CLI execution matters
 - the workflow benefits from shell traceability
 
@@ -82,10 +82,11 @@ Action:
 - if image-specific CLI capability is not actually verified in the current host,
   say so and do not pretend shell availability alone proves the route is ready
 
-## Chinese-First Routing Rule
+## Native-First Routing Rule
 
-If the image task is Chinese-first, default to a Gemini-family route before the
-host built-in image tool.
+If the image task needs execution, default to the host built-in image tool before
+Gemini-family, CLI, or browser routes. This also applies to Chinese-first,
+structure-heavy, text-heavy, and layout-sensitive tasks.
 
 Chinese-first usually means one or more of these are true:
 
@@ -94,32 +95,31 @@ Chinese-first usually means one or more of these are true:
 - Chinese semantic nuance matters to the subject or scene
 - prior built-in image runs already showed weaker Chinese understanding
 
-Route choice inside the Gemini family:
+Use a Gemini-family or browser route only when one of these is true:
 
-- use Gemini CLI or Nano Banana when local execution is verified and shell
-  traceability is useful
-- use browser create-image with Gemini as the target site when the website path
-  is required or browser-only Gemini behavior matters
-- prefer `chrome-devtools` when the host exposes it and the Gemini website flow
-  is the intended route
+- the user explicitly asks for that backend or website workflow
+- another layer has already fixed that route for the turn
+- a native image attempt clearly fails for route-specific reasons and the
+  reroute reason is stated before execution
+- the task requires backend-specific behavior that the host built-in image tool
+  cannot provide
 
 Upstream constraint rule:
 
 - if another layer has already fixed the route for the turn, treat that as the
   active routing constraint here
-- if an upstream layer has already selected Route 2 for an English-first fast
-  draft, keep that route unless Gemini-specific or website-only behavior is
-  actually required
-- do not downgrade to the host built-in image tool just because native
-  execution is faster, simpler, or locally available
-- if Gemini CLI or Gemini website execution is blocked and you must downgrade,
-  say exactly what is blocked and name the fallback route explicitly
+- if an upstream layer has already selected Route 2, keep that route unless
+  backend-specific or website-only behavior is actually required
+- do not upgrade to Gemini-family, CLI, or browser routes just because the task
+  is Chinese-first or visually complex
+- if a non-native route is blocked, say exactly what is blocked and name the
+  fallback route explicitly
 
 Important limit:
 
 - if exact publishable Chinese wording or later editing is the real requirement,
-  do not overpromise on raster generation just because Gemini is better than the
-  built-in path; consider diagram, slide, or vector workflows instead
+  do not overpromise on raster generation; consider diagram, slide, or vector
+  workflows instead
 
 ## Route 4: Browser Create-Image Flow
 
@@ -208,9 +208,10 @@ Anti-pattern:
   probing without first stating that the real requirement is existing-session
   reuse
 
-Gemini website download rule:
+Explicit Gemini website download rule:
 
-- if the goal is the high-resolution asset, use the image-local
+- once the Gemini website route has been explicitly selected and the goal is the
+  high-resolution asset, use the image-local
   `Download Full size` control, not a generic page-level download action
 - if the asset is still shown as a smaller image card, hover over the image
   region first to reveal the image-local controls
@@ -218,8 +219,8 @@ Gemini website download rule:
   the full-size control is unavailable
 - if the image needs to be opened into a lightbox or focused card before that
   control appears, treat that as part of the route
-- treat Gemini full-size downloads as single-flight by default: one in-flight
-  `Download Full size` at a time
+- treat explicitly selected Gemini full-size downloads as single-flight within
+  that route: one in-flight `Download Full size` at a time
 - treat a download click as effective only after the site enters an active
   state such as spinner/loading behavior, or equivalent network/download
   evidence proves the request started
@@ -236,6 +237,15 @@ Gemini website download rule:
   `no download`
 - do not downgrade to screenshot fallback until you have verified that the
   correct download control was used and a reasonable wait produced no local file
+- once the Gemini website prompt has been submitted and the image render is
+  under way, the stable per-route policy is
+  `post_submit_policy = no_extra_clicks_before_direct_download`
+- under that policy, do not insert exploratory clicks between `Send` and the
+  image-local `Download Full size` action unless a recorded blocker proves the
+  direct chain is unavailable for the current run
+- when Chrome Dev existing-session attach is the working route, it is useful to
+  record the route variant explicitly as `gemini-web-chrome-dev` instead of
+  collapsing it into a generic browser label
 
 Preflight before promising execution:
 
@@ -249,7 +259,8 @@ If preflight fails:
 - say explicitly that the browser route is blocked by environment or approval
   constraints
 - do not imply that the prompt or route selection was wrong
-- fall back to `prompt-only`, built-in image generation, or Gemini CLI,
+- fall back to `prompt-only`, built-in image generation, or an explicitly
+  selected CLI route,
   depending on what the user asked for and what remains feasible
 
 If the failure is actually "existing session was required but the chosen
@@ -258,6 +269,21 @@ adapter started clean":
 - say that explicitly
 - reroute to `chrome-devtools` existing-session attach or Playwright extension
 - do not describe it as a prompt failure
+
+## Batch Consistency Rule
+
+If one page, deck, or deliverable family needs multiple sibling images and one
+non-native website route has already been explicitly selected and validated for
+the set:
+
+- keep the remaining sibling images on that same validated route and adapter
+  only when provenance consistency is more important than the native default
+- record the stable route label, such as `gemini-web-chrome-dev`, in the run
+  pack
+- do not silently mix built-in, CLI, and browser provenance across the same
+  visual set unless the acceptance record explains why one image had to diverge
+- if a route must diverge, treat that as an explicit batch-level decision, not
+  an invisible per-image improvisation
 
 If the failure is actually "debuggable Chrome exists, but not for the right
 logged-in Gemini session":

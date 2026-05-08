@@ -2,6 +2,7 @@
   "recommended_adapter": "",
   "session_model": "",
   "fallback_adapter": "",
+  "batch_route_lock": false,
   "reason_codes": [],
   "blockers": [],
   "prohibited_moves": [],
@@ -9,7 +10,8 @@
     "single_flight": false,
     "effective_click_required": false,
     "local_file_success_required": false,
-    "materialization_grace_window_seconds": 0
+    "materialization_grace_window_seconds": 0,
+    "post_submit_policy": ""
   },
   "confidence": "",
   "evidence_quality": ""

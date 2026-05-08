@@ -30,6 +30,15 @@ Template roles:
 - `artifacts/`
   - unapproved outputs and working files
 
+Recommended browser-run artifact family per image label:
+
+- `[label].prompt.txt`
+- `[label].before-send.png`
+- `[label].after-render.png`
+- `[label].after-download.png`
+- `[label].result.json`
+- `[label].downloaded.[ext]`
+
 Rule:
 
 - source files say what should be made
@@ -39,3 +48,5 @@ Rule:
 - `05` says what objectively happened
 - `06` says why it happened and what changes next
 - only approved promoted artifacts leave the run pack
+- if one route proves stable for a sibling image batch, lock the batch to that
+  route unless `05-acceptance.md` records an explicit exception

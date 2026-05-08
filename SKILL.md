@@ -3,11 +3,11 @@ name: visual-prompt-router
 description: >
   Use when the user wants strong image-generation prompts or needs to choose the
   right image workflow. Covers prompt writing, deliverable triage, medium-first
-  prompt assembly, and routing across prompt-only, built-in image tools, Gemini
-  CLI or Nano Banana, and browser create-image flows. Works for concept art,
-  standing illustrations, design sheets, technical infographics or architecture
-  explainers, illustration-plus-figurine product shots, and image redo or
-  reroute decisions. 适用于做图提示词优化、介质判断、作图路径调度、比稿重做与通道切换。
+  prompt assembly, and routing across prompt-only, host built-in image tools,
+  optional Gemini CLI or Nano Banana, and browser create-image flows. Works for
+  concept art, standing illustrations, design sheets, technical infographics or
+  architecture explainers, illustration-plus-figurine product shots, and image
+  redo or reroute decisions. 适用于做图提示词优化、介质判断、作图路径调度、比稿重做与通道切换。
 ---
 
 # Visual Prompt Router
@@ -44,8 +44,8 @@ It solves five questions:
 - The user needs to decide between concept sketch, clean standing illustration,
   design sheet, technical infographic, architecture explainer, product shot,
   figurine display, or another image type
-- The user wants to choose between prompt-only, built-in image generation,
-  Gemini CLI or Nano Banana, or browser create-image flows
+- The user wants to choose between prompt-only, host built-in image generation,
+  optional Gemini CLI or Nano Banana, or browser create-image flows
 - The user wants to review a generated image and decide whether to refine,
   reroute, or redo
 
@@ -111,122 +111,128 @@ It solves five questions:
     them from chat history.
 11. If two rounds fail in the same direction, consider rerouting instead of
     endlessly rewriting the prompt.
-12. For Chinese-first image tasks, default to a Gemini-family route instead of
-    the host built-in image tool unless the user explicitly wants a rough draft
-12. For Chinese-first image tasks, default to a Gemini-family route instead of the host built-in image tool unless the user explicitly wants a rough draft
-    or explicitly requests another path. If another layer has already fixed the route for the turn, do not silently override that decision here. For
-    English-first image tasks, the host built-in image tool can be the default
-    fast path unless the user asks for Gemini, the website workflow, or another
-    backend-specific behavior.
-13. If the user has configured Hermes `image_gen.provider=openai-codex`, or explicitly says to use `image_generate` directly, treat `image_generate` as the fixed route. Do not spawn Codex CLI just because the user says "Codex imagegen" or because the provider name contains `codex`; avoid CLI capability-probing loops. See [references/openai-codex-imagegen-routing.md](./references/openai-codex-imagegen-routing.md).
+12. Default to the host built-in image tool for image execution, including
+    Chinese-first, structure-heavy, text-heavy, or layout-sensitive tasks. Use a
+    Gemini-family, CLI, or browser route only when the user explicitly asks for
+    it, another layer has already fixed that route for the turn, or a native
+    attempt clearly fails for route-specific reasons and the reroute is stated
+    before execution.
+13. If the user has configured Hermes `image_gen.provider=openai-codex`, or
+    explicitly says to use `image_generate` directly, treat `image_generate` as
+    the fixed route. Do not spawn Codex CLI just because the user says "Codex
+    imagegen" or because the provider name contains `codex`; avoid CLI
+    capability-probing loops. See
+    [references/openai-codex-imagegen-routing.md](./references/openai-codex-imagegen-routing.md).
 14. Once the selected route is the host's native image tool, and no stronger
     upstream routing constraint is in force, execute directly when the user has
     explicitly asked to make the image such as `做图`, `出图`, `生成图片`,
     `generate image`, or `render`. Do not use native direct execution as a
     shortcut around route selection.
-14. Route, adapter, and tool-call discussion are primarily for non-native
+15. Route, adapter, and tool-call discussion are primarily for non-native
     execution paths such as `Gemini CLI`, `Nano Banana`, `chrome-devtools`,
     `playwright`, or browser create-image flows.
-15. For text-heavy diagrams, layout map and text budget beat style adjectives.
-16. If exact labels or later editability are hard requirements, do not pretend a
+16. For text-heavy diagrams, layout map and text budget beat style adjectives.
+17. If exact labels or later editability are hard requirements, do not pretend a
    raster image is automatically the final deliverable.
-17. If the user gives only architecture or flow relationships but the requested
+18. If the user gives only architecture or flow relationships but the requested
    deliverable is a technical infographic, do not default to a dead enterprise
    diagram. Infer a friendly educational visual system with concrete title
    treatment, section markers, card language, arrow language, and icon
    metaphors.
-18. For community-style explainers, give each role its own node anatomy and
+19. For community-style explainers, give each role its own node anatomy and
     color role. Do not let host, client, server, resource, and component cards
     all collapse into the same anonymous rectangle style.
-19. For protocol or architecture teaching infographics, generic words such as
+20. For protocol or architecture teaching infographics, generic words such as
     `clean`, `modern`, `friendly`, or `professional` are not enough by
     themselves. The prompt should explicitly lock concrete visual primitives:
     title badge or title ribbon treatment, dashed teaching arrows, literal icon
     metaphors for resource cards, and role-based color mapping.
-20. For protocol explainers that name specific resource targets, do not stop at
+21. For protocol explainers that name specific resource targets, do not stop at
     `simple icons` or `recognizable icons`. Name the actual metaphor for each
     target whenever possible, such as `laptop-plus-folder`, `database
     cylinder`, or `globe with API badges`.
-21. For leadership-briefing architecture explainers, do not treat every box as
+22. For leadership-briefing architecture explainers, do not treat every box as
     equal. Explicitly encode the current visible primary surface, the
     operational hinge, and the backstage formal service. `Explicit but
     secondary` is not the same as hidden.
-22. For browser create-image routes, `image rendered in the page` is not the
+23. For browser create-image routes, `image rendered in the page` is not the
     same as `artifact captured locally`. Do not say download succeeded until a
     concrete local file path has been verified.
-23. If a browser site exposes multiple download controls, record the exact one
+24. If a browser site exposes multiple download controls, record the exact one
     that yields the intended asset. Do not confuse a page-level download action
     with an image-local full-resolution download action.
-24. After triggering a browser download, do not thrash into screenshots,
+25. After triggering a browser download, do not thrash into screenshots,
     alternate buttons, or path-hunting immediately. First allow for slow save
     behavior and verify whether a new or overwritten file actually materialized
     by timestamp, size, dimensions, or hash.
-25. For Gemini website workflows, assume only one full-size download is safe to
-    have in flight at a time unless the site behavior was explicitly verified
-    otherwise. Do not queue a second `Download Full size` click before the
-    first one has materialized locally or been declared blocked.
-26. If a website hides image-local controls until the pointer hovers over the
+26. For explicitly selected Gemini website workflows, assume only one full-size
+    download is safe to have in flight at a time unless the site behavior was
+    explicitly verified otherwise. Do not queue a second `Download Full size`
+    click before the first one has materialized locally or been declared
+    blocked.
+27. If a website hides image-local controls until the pointer hovers over the
     image region, treat that hover as part of the required workflow. Do not
     conclude the control is absent until the reveal gesture has been tried on
     the image itself.
-27. Choose browser adapters by session model and exposed capability surface, not
+28. Choose browser adapters by session model and exposed capability surface, not
     by adapter name alone. `playwright`, `chrome-devtools`, and
     `computer-use` solve different problems.
-28. Do not assume Playwright can silently take over the user's currently open,
+29. Do not assume Playwright can silently take over the user's currently open,
     logged-in browser tab unless the host has an existing-tab bridge such as
     the Playwright browser extension or an explicit CDP attach path. A managed
     Playwright browser is the default mental model.
-29. Do not treat copying a live Chrome or Edge profile as the default way to
+30. Do not treat copying a live Chrome or Edge profile as the default way to
     recover login state. When existing session state matters, prefer official
     existing-session attach flows such as Chrome DevTools MCP `--autoConnect`,
     `--browser-url`, or the Playwright MCP browser extension.
-30. When adapter choice is non-trivial, normalize the situation into structured
+31. When adapter choice is non-trivial, normalize the situation into structured
     browser decision metadata first, then emit a structured decision record.
     Do not rely on free-form prose alone for adapter selection.
-31. For browser download workflows, do not treat a raw click dispatch as an
+32. For browser download workflows, do not treat a raw click dispatch as an
     effective download click. The click becomes effective only when the site
     shows an active state such as spinner/loading behavior, or when equivalent
     network/download evidence is captured.
-32. After an effective browser download click, allow for a materialization
+33. After an effective browser download click, allow for a materialization
     delay window before retrying, rerouting, or downgrading to screenshot
     fallback. Slow local save behavior is not the same as failure.
-33. For Gemini website image downloads, the safe default is:
+34. When a Gemini website image-download route has been explicitly selected, the
+    safe per-route behavior is:
     `hover if needed -> reveal the image-local control -> click Download Full
     size once -> confirm active state -> wait for local materialization ->
     verify the file`. Do not insert extra clicks inside that window.
-34. Structured metadata or JSON can be the internal source of truth for facts,
+35. Structured metadata or JSON can be the internal source of truth for facts,
     layout, and forbidden relations, but do not assume raw JSON is a good
-    final prompt for Gemini website image generation.
-35. When the source is structured, compile it into compact natural-language
+    final prompt for image generation, especially on non-native website routes.
+36. When the source is structured, compile it into compact natural-language
     render instructions before sending it to the image model. Keep keys,
     quotes, and schema words on the source side, not in the final render
     prompt.
-36. If the task will be executed, resumed later, compared across rounds, or
+37. If the task will be executed, resumed later, compared across rounds, or
     handed between agents, externalize it into a file-driven run pack before
     running tools.
-37. In a file-driven run pack, treat prompt source files as truth source, route
+38. In a file-driven run pack, treat prompt source files as truth source, route
     decisions and prompt snapshots as execution objects, review checklists as
     status projections, and only the approved promoted artifact as the display
     projection.
-38. When the user provides a prior approved conversation, prior prompt, prior
+39. When the user provides a prior approved conversation, prior prompt, prior
     image family, or benchmark case, retrieve and cite those cases before
     composing the new prompt. Do not default to zero-shot if relevant cases
     already exist.
-39. For recurring technical infographic or leadership-briefing diagram work,
+40. For recurring technical infographic or leadership-briefing diagram work,
     case-first prompting is the default. Zero-shot is the fallback only when no
     usable case exists.
-40. For visual tasks, image examples outrank prompt-only examples. If both are
+41. For visual tasks, image examples outrank prompt-only examples. If both are
     available, learn the visual target from the approved image first, then use
     the old prompt only as supporting evidence for how that result was reached.
-41. For recurring deliverable families, case-first is not complete until one
+42. For recurring deliverable families, case-first is not complete until one
     concrete benchmark image or assembled benchmark board has been selected.
-42. If no exact single public image exists for a recurring family, assemble a
+43. If no exact single public image exists for a recurring family, assemble a
     benchmark board from the strongest public clues and record the provenance
     instead of pretending a vague search result is a gold-standard case.
-43. In iterative runs, write the round verdict before writing reflection. Do
+44. In iterative runs, write the round verdict before writing reflection. Do
     not merge acceptance, diagnosis, and next-step ideation into one vague
     paragraph.
-44. Each new round should change one primary variable unless the previous round
+45. Each new round should change one primary variable unless the previous round
     was too broken for narrower diagnosis to be meaningful.
 
 ## Technical Infographic Minimum
@@ -235,23 +241,23 @@ When the deliverable is a protocol explainer, architecture explainer, or
 community-style technical infographic, the emitted prompt should explicitly
 encode these visual primitives before you consider it done:
 
-1. a highlighted title badge, title ribbon, or title band
-2. an upper main relationship map plus a lower support band
-3. host as a larger parent panel with app-like child tiles
-4. clients as bridge cards
-5. servers as repeated service-stack cards
-6. dashed teaching arrows
-7. resource cards with explicit icon metaphors
-8. role-based color mapping across host, client, server, resource, and lower
+46. a highlighted title badge, title ribbon, or title band
+47. an upper main relationship map plus a lower support band
+48. host as a larger parent panel with app-like child tiles
+49. clients as bridge cards
+50. servers as repeated service-stack cards
+51. dashed teaching arrows
+52. resource cards with explicit icon metaphors
+53. role-based color mapping across host, client, server, resource, and lower
    band
-9. a lighter secondary treatment for the lower band
+54. a lighter secondary treatment for the lower band
 
 For leadership-briefing variants, also encode:
 
-1. which region is the current visible primary surface
-2. which node is the operational hinge
-3. which backstage formal service must be explicit but secondary
-4. which direct arrows are forbidden because the handoff is controlled
+55. which region is the current visible primary surface
+56. which node is the operational hinge
+57. which backstage formal service must be explicit but secondary
+58. which direct arrows are forbidden because the handoff is controlled
 
 Default concrete resource metaphors for protocol explainers:
 
@@ -340,11 +346,11 @@ If the user did not specify the deliverable clearly, resolve that first.
 
 Read inputs in this order:
 
-1. user goal and acceptance language
-2. character, object, brand, or world facts
-3. attached images or referenced visuals
-4. earlier approved prompt or image versions
-5. backend-specific constraints if execution is required
+59. user goal and acceptance language
+60. character, object, brand, or world facts
+61. attached images or referenced visuals
+62. earlier approved prompt or image versions
+63. backend-specific constraints if execution is required
 
 Do not let a reference image silently override explicit textual facts unless the
 user says the image should lead.
@@ -360,11 +366,11 @@ approved cases.
 
 Priority order:
 
-1. approved project-local images in the same family
-2. prior runs from the same image family with visible outputs
-3. benchmark image examples already stored in this skill
-4. approved prompt and image pairs
-5. user-provided prior conversations or approved examples
+64. approved project-local images in the same family
+65. prior runs from the same image family with visible outputs
+66. benchmark image examples already stored in this skill
+67. approved prompt and image pairs
+68. user-provided prior conversations or approved examples
 
 For a file-driven run, write the chosen cases into `01b-case-references.md`:
 
@@ -389,43 +395,44 @@ Before writing the main prompt, answer:
 - Is the background structural, atmospheric, or minimal
 - Is this meant to feel like a strict schematic or a friendly teaching
   infographic
-- Is the task Chinese-first enough that route choice should prefer Gemini
+- Does the task explicitly require a non-native route, or should native image
+  generation remain selected
 - Does text accuracy or later editability matter enough to affect route choice
 
 ### 4. Build the Prompt
 
 Use the medium-first structure:
 
-1. deliverable medium
-2. image purpose
-3. composition and viewing order
-4. subject and design system
-5. material and lighting
-6. creator stance
-7. viewer impression sequence
-8. environment role
-9. consistency constraints
-10. negative constraints
+69. deliverable medium
+70. image purpose
+71. composition and viewing order
+72. subject and design system
+73. material and lighting
+74. creator stance
+75. viewer impression sequence
+76. environment role
+77. consistency constraints
+78. negative constraints
 
 For technical infographics, also force a concrete visual-system layer:
 
-1. title badge or title ribbon treatment
-2. upper main zone and lower support band
-3. host as parent panel with app-like child tiles
-4. clients as bridge cards
-5. servers as repeated service-stack cards
-6. resources as literal target cards with explicit icon metaphors
-7. dashed teaching arrows
-8. role-based color mapping by section
-9. lighter secondary treatment for the bottom band
+79. title badge or title ribbon treatment
+80. upper main zone and lower support band
+81. host as parent panel with app-like child tiles
+82. clients as bridge cards
+83. servers as repeated service-stack cards
+84. resources as literal target cards with explicit icon metaphors
+85. dashed teaching arrows
+86. role-based color mapping by section
+87. lighter secondary treatment for the bottom band
 
 For leadership-briefing architecture explainers, also force a semantic-tier
 layer:
 
-1. current visible primary surface
-2. operational hinge such as review, approval, receipt, or governance
-3. backstage formal service that is explicit but secondary
-4. boundary language that forbids direct frontstage access when relevant
+88. current visible primary surface
+89. operational hinge such as review, approval, receipt, or governance
+90. backstage formal service that is explicit but secondary
+91. boundary language that forbids direct frontstage access when relevant
 
 Detailed guidance and templates live in
 [references/prompt-assembly.md](./references/prompt-assembly.md) and
@@ -436,17 +443,18 @@ Case retrieval guidance lives in
 ### 5. Pick the Route
 
 - If the user wants only wording, stop at prompt delivery
-- If the task is Chinese-first, prefer a Gemini-family route before the host
-  built-in image path unless the user explicitly asks otherwise
-- If the task is English-first and no Gemini-specific or website-only behavior
-  is needed, prefer the host built-in image path for fast iteration
+- If the user asks to make an image and the host built-in image path is
+  available, prefer the host-native route first
+- Do not switch to a Gemini-family route just because the task is Chinese-first,
+  structure-heavy, text-heavy, or layout-sensitive
 - If another layer has already fixed the route for the turn, honor that route
   instead of silently reopening route selection here
 - If the host image tool is enough, the chosen route is native, and no
   stronger routing constraint is in force, execute directly once the user has
   clearly asked to make the image
-- If the task depends on Gemini CLI, Nano Banana, or Gemini website strengths,
-  use that route
+- If the user explicitly requests Gemini CLI, Nano Banana, or a website-specific
+  image workflow, or if a native attempt clearly exposes a route mismatch, use
+  that route after stating the reason
 - If the task depends on browser-only create-image flow or high-res downloads,
   use browser automation only after confirming the host can actually drive a
   browser for that turn; otherwise fall back cleanly
@@ -458,25 +466,25 @@ Detailed routing rules live in
 
 Before non-native execution, do two things:
 
-1. run a route preflight that verifies the actual adapter or command surface
-2. create a small route card that captures prompt source, adapter, artifact
+92. run a route preflight that verifies the actual adapter or command surface
+93. create a small route card that captures prompt source, adapter, artifact
    directory, expected outputs, and current blocker state
 
 For file-driven runs, also write:
 
-1. `02-final-prompt.txt`
-2. `03-adapter-decision.json`
-3. `04-route-card.json`
+94. `02-final-prompt.txt`
+95. `03-adapter-decision.json`
+96. `04-route-card.json`
 
 For browser create-image routes, the route card should also capture:
 
-1. the exact download control that is supposed to produce the final asset
-2. the expected download directory
-3. how download completion will be verified
-4. whether the site may reuse an old filename or delay write-out
-5. whether a full-size download is already in flight
-6. whether the control must be revealed by hovering over the image region first
-7. whether the session comes from a managed browser, a persistent profile, an
+97. the exact download control that is supposed to produce the final asset
+98. the expected download directory
+99. how download completion will be verified
+100. whether the site may reuse an old filename or delay write-out
+101. whether a full-size download is already in flight
+102. whether the control must be revealed by hovering over the image region first
+103. whether the session comes from a managed browser, a persistent profile, an
    existing browser attach, or front-window app control
 
 For the host-native image route, the rule is simpler: if the native image
@@ -497,23 +505,23 @@ Detailed guidance lives in
 
 Check the result against the acceptance dimensions, especially:
 
-1. accuracy to source
-2. fit to the requested medium
-3. layout integrity
-4. text fidelity when labels matter
-5. pedagogical warmth and visual liveliness
-6. design and aesthetic quality
-7. usefulness as a downstream anchor
+104. accuracy to source
+105. fit to the requested medium
+106. layout integrity
+107. text fidelity when labels matter
+108. pedagogical warmth and visual liveliness
+109. design and aesthetic quality
+110. usefulness as a downstream anchor
 
 For iterative runs, also lock:
 
-1. which benchmark asset this round is being judged against
-2. which batch is being judged, not just one attractive image
-3. which artifact is the `top hit`
-4. what the `hit rate` is
-5. whether the round is better, same, or worse than the previous round
-6. which hard gate failed first
-7. which single primary variable should change next
+111. which benchmark asset this round is being judged against
+112. which batch is being judged, not just one attractive image
+113. which artifact is the `top hit`
+114. what the `hit rate` is
+115. whether the round is better, same, or worse than the previous round
+116. which hard gate failed first
+117. which single primary variable should change next
 
 If the image is wrong, decide whether the fault is:
 
@@ -549,17 +557,17 @@ For file-driven runs:
 
 When the user asks only for a prompt, prefer this format:
 
-1. `正向提示词`
-2. `负向提示词`
-3. `补充说明`
+118. `正向提示词`
+119. `负向提示词`
+120. `补充说明`
 
 When the user asks for routing help, prefer this format:
 
-1. recommended route
-2. why this route fits
-3. fallback route
-4. any execution constraints
-5. whether browser control or approval gating was verified
+121. recommended route
+122. why this route fits
+123. fallback route
+124. any execution constraints
+125. whether browser control or approval gating was verified
 
 ## Writing Standard
 

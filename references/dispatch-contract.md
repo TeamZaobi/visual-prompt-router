@@ -48,6 +48,11 @@ Record:
 28. `download_effective_click_evidence`
 29. `download_materialization_grace_window_seconds`
 30. `download_reclick_allowed_at`
+31. `post_submit_policy`
+32. `persisted_artifact`
+33. `result_record_path`
+34. `batch_id`
+35. `batch_route_locked`
 
 ## Route Examples
 
@@ -69,6 +74,8 @@ Record:
 
 - `route = browser-create-image`
 - `adapter = chrome-devtools` or `playwright` or `computer-use`
+- `route_variant = gemini-web-chrome-dev` when that exact chain is the working
+  route
 - `session_origin = managed-playwright` or `playwright-extension-existing-tab` or `chrome-devtools-autoconnect` or `chrome-devtools-browser-url` or `computer-use-front-window`
 - `initial_state_source = clean browser` or `persistent profile` or `storage-state` or `existing logged-in tab`
 - `adapter_decision_input = normalized JSON from browser-adapter-decision-tree.md`
@@ -85,6 +92,11 @@ Record:
 - `download_effective_click_evidence = spinner | loading UI | network request | unknown`
 - `download_materialization_grace_window_seconds = 20`
 - `download_reclick_allowed_at = ISO timestamp after the grace window`
+- `post_submit_policy = no_extra_clicks_before_direct_download`
+- `persisted_artifact = ./artifacts/mcp-host-overview.downloaded.jpeg`
+- `result_record_path = ./artifacts/mcp-host-overview.result.json`
+- `batch_id = github-medical-researchers-page`
+- `batch_route_locked = true`
 - `last_completed_step = create-image page loaded`
 
 ## Artifact Directory
@@ -116,6 +128,7 @@ Keep there:
 
 - prompt snapshot
 - route card
+- result record JSON
 - downloaded images
 - chosen candidates
 - blocker notes
@@ -177,6 +190,9 @@ Useful browser-download fields:
 - `download_verification_method = precise mtime plus dimensions`
 - `download_in_flight = true` until the file is verified locally
 - `download_materialization_grace_window_seconds = 20`
+- `post_submit_policy = no_extra_clicks_before_direct_download`
+- `persisted_artifact = ./artifacts/branch-safe-experiment.downloaded.jpeg`
+- `result_record_path = ./artifacts/branch-safe-experiment.result.json`
 
 ## Single-Flight Rule For Gemini
 
@@ -188,6 +204,39 @@ Do not clear that lock until one of these is true:
 - the file materialized locally
 - the attempt was declared blocked after reasonable waiting and verification
 - the route changed and the old attempt was explicitly abandoned
+
+## Result Record Rule
+
+For browser create-image execution, especially Gemini website runs, keep a
+small structured result record alongside the route card.
+
+Minimum useful fields:
+
+- `route`
+- `image_label`
+- `page_url_before_submit`
+- `page_title_before_submit`
+- `create_image_clicked`
+- `before_send_screenshot`
+- `submitted_at`
+- `page_url_after_submit`
+- `post_submit_policy`
+- `render_started`
+- `render_started_at`
+- `render_completed_at`
+- `after_render_screenshot`
+- `download_clicked_at`
+- `downloaded_file`
+- `persisted_artifact`
+- `after_download_screenshot`
+
+Purpose:
+
+- prove the render actually happened on the intended route
+- prove the download control was actually used
+- separate the browser's original downloaded file from the persisted artifact in
+  the run pack
+- make cross-round comparison possible without replaying memory from chat
 
 ## Minimum User-Facing Report
 
